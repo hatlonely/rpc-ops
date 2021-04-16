@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/hatlonely/rpc-ops/api/gen/go/api";
+
+message Empty {}
+
+message Repository {
+  int64 id = 1;
+}
+
+message ListRepositoryReq {
+  int32 offset = 1;
+  int32 limit = 2;
+}
+
+message ListRepositoryRes {
+  repeated Repository repositories = 1;
+}
+
+message GetRepositoryReq {
+  string id = 1;
+}
+
+message DelRepositoryReq {
+  string id = 1;
+}
+
+message PutRepositoryRes {
+  string id = 1;
+}
+
+service OpsService {
+  rpc ListRepository(ListRepositoryReq) returns (ListRepositoryRes) {
+    option (google.api.http) = {
+      get: "/v1/repository"
+    };
+  }
+
+  rpc GetRepository(GetRepositoryReq) returns (Repository) {
+    option (google.api.http) = {
+      get: "/v1/repository/{id}"
+    };
+  }
+
+  rpc DelRepository(DelRepositoryReq) returns (Empty) {
+    option (google.api.http) = {
+      delete: "/v1/repository/{id}"
+    };
+  }
+
+  rpc PutRepository(Repository) returns (PutRepositoryRes) {
+    option (google.api.http) = {
+      post: "/v1/repository"
+      body: "*"
+    };
+  }
+
+  rpc UpdateRepository(Repository) returns (Empty) {
+    option (google.api.http) = {
+      put: "/v1/repository/{repository.id}"
+      body: "*"
+    };
+  }
+}
+

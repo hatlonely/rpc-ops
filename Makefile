@@ -27,7 +27,7 @@ vendor: go.mod go.sum
 	go mod vendor
 
 .PHONY: codegen
-codegen: api/ancient.proto submodule
+codegen: api/ops.proto submodule
 	if [ ! -z "$(shell docker ps --filter name=protobuf -q)" ]; then \
 		docker stop protobuf; \
 	fi
