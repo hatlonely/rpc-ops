@@ -23,6 +23,8 @@ type OpsServiceClient interface {
 	DelRepository(ctx context.Context, in *DelRepositoryReq, opts ...grpc.CallOption) (*Empty, error)
 	PutRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*PutRepositoryRes, error)
 	UpdateRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*Empty, error)
+	DescribeRepository(ctx context.Context, in *DescribeRepositoryReq, opts ...grpc.CallOption) (*DescribeRepositoryRes, error)
+	RunOps(ctx context.Context, in *RunOpsReq, opts ...grpc.CallOption) (*RunOpsRes, error)
 }
 
 type opsServiceClient struct {
@@ -78,6 +80,24 @@ func (c *opsServiceClient) UpdateRepository(ctx context.Context, in *Repository,
 	return out, nil
 }
 
+func (c *opsServiceClient) DescribeRepository(ctx context.Context, in *DescribeRepositoryReq, opts ...grpc.CallOption) (*DescribeRepositoryRes, error) {
+	out := new(DescribeRepositoryRes)
+	err := c.cc.Invoke(ctx, "/api.OpsService/DescribeRepository", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *opsServiceClient) RunOps(ctx context.Context, in *RunOpsReq, opts ...grpc.CallOption) (*RunOpsRes, error) {
+	out := new(RunOpsRes)
+	err := c.cc.Invoke(ctx, "/api.OpsService/RunOps", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OpsServiceServer is the server API for OpsService service.
 // All implementations must embed UnimplementedOpsServiceServer
 // for forward compatibility
@@ -87,6 +107,8 @@ type OpsServiceServer interface {
 	DelRepository(context.Context, *DelRepositoryReq) (*Empty, error)
 	PutRepository(context.Context, *Repository) (*PutRepositoryRes, error)
 	UpdateRepository(context.Context, *Repository) (*Empty, error)
+	DescribeRepository(context.Context, *DescribeRepositoryReq) (*DescribeRepositoryRes, error)
+	RunOps(context.Context, *RunOpsReq) (*RunOpsRes, error)
 	mustEmbedUnimplementedOpsServiceServer()
 }
 
@@ -108,6 +130,12 @@ func (UnimplementedOpsServiceServer) PutRepository(context.Context, *Repository)
 }
 func (UnimplementedOpsServiceServer) UpdateRepository(context.Context, *Repository) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRepository not implemented")
+}
+func (UnimplementedOpsServiceServer) DescribeRepository(context.Context, *DescribeRepositoryReq) (*DescribeRepositoryRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeRepository not implemented")
+}
+func (UnimplementedOpsServiceServer) RunOps(context.Context, *RunOpsReq) (*RunOpsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RunOps not implemented")
 }
 func (UnimplementedOpsServiceServer) mustEmbedUnimplementedOpsServiceServer() {}
 
@@ -212,6 +240,42 @@ func _OpsService_UpdateRepository_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OpsService_DescribeRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeRepositoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).DescribeRepository(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/DescribeRepository",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).DescribeRepository(ctx, req.(*DescribeRepositoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OpsService_RunOps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunOpsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).RunOps(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/RunOps",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).RunOps(ctx, req.(*RunOpsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OpsService_ServiceDesc is the grpc.ServiceDesc for OpsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -238,6 +302,14 @@ var OpsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateRepository",
 			Handler:    _OpsService_UpdateRepository_Handler,
+		},
+		{
+			MethodName: "DescribeRepository",
+			Handler:    _OpsService_DescribeRepository_Handler,
+		},
+		{
+			MethodName: "RunOps",
+			Handler:    _OpsService_RunOps_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -16,6 +16,38 @@
     "application/json"
   ],
   "paths": {
+    "/v1/describeRepository": {
+      "post": {
+        "operationId": "OpsService_DescribeRepository",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiDescribeRepositoryRes"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiDescribeRepositoryReq"
+            }
+          }
+        ],
+        "tags": [
+          "OpsService"
+        ]
+      }
+    },
     "/v1/repository": {
       "get": {
         "operationId": "OpsService_ListRepository",
@@ -177,9 +209,60 @@
           "OpsService"
         ]
       }
+    },
+    "/v1/runOps": {
+      "post": {
+        "operationId": "OpsService_RunOps",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiRunOpsRes"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiRunOpsReq"
+            }
+          }
+        ],
+        "tags": [
+          "OpsService"
+        ]
+      }
     }
   },
   "definitions": {
+    "apiDescribeRepositoryReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "apiDescribeRepositoryRes": {
+      "type": "object",
+      "properties": {
+        "opsYaml": {
+          "type": "string"
+        }
+      }
+    },
     "apiEmpty": {
       "type": "object"
     },
@@ -227,6 +310,37 @@
           "type": "string"
         },
         "updateAt": {
+          "type": "string"
+        }
+      }
+    },
+    "apiRunOpsReq": {
+      "type": "object",
+      "properties": {
+        "repositoryID": {
+          "type": "string"
+        },
+        "variableID": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        },
+        "task": {
+          "type": "string"
+        },
+        "args": {
+          "type": "string"
+        }
+      }
+    },
+    "apiRunOpsRes": {
+      "type": "object",
+      "properties": {
+        "jobID": {
           "type": "string"
         }
       }

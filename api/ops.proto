@@ -40,6 +40,41 @@ message PutRepositoryRes {
   string id = 1;
 }
 
+message DescribeRepositoryReq {
+  string id = 1;
+  string version = 2;
+}
+
+message DescribeRepositoryRes {
+  string opsYaml = 1;
+}
+
+message RunOpsReq {
+  string repositoryID = 1;
+  string variableID = 2;
+  string version = 3;
+  string environment = 4;
+  string task = 5;
+  string args = 6;
+}
+
+message RunOpsRes {
+  string jobID = 1;
+}
+
+message Job {
+  string id = 1;
+  string seq = 2;
+  string repositoryID = 3;
+  string variableID = 4;
+  string version = 5;
+  string createAt = 6;
+  string updateAt = 7;
+  string scheduleAt = 8;
+  string elapseSeconds = 9;
+  string output = 10;
+}
+
 service OpsService {
   rpc ListRepository(ListRepositoryReq) returns (ListRepositoryRes) {
     option (google.api.http) = {
@@ -72,5 +107,18 @@ service OpsService {
       body: "*"
     };
   }
-}
 
+  rpc DescribeRepository(DescribeRepositoryReq) returns (DescribeRepositoryRes) {
+    option (google.api.http) = {
+      post: "/v1/describeRepository"
+      body: "*"
+    };
+  }
+
+  rpc RunOps(RunOpsReq) returns (RunOpsRes) {
+    option (google.api.http) = {
+      post: "/v1/runOps"
+      body: "*"
+    };
+  }
+}
