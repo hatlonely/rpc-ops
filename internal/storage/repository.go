@@ -69,7 +69,7 @@ func (s *OpsStorage) UpdateRepository(ctx context.Context, repository *Repositor
 
 func (s *OpsStorage) ListRepository(ctx context.Context, offset int32, limit int32) ([]*Repository, error) {
 	collection := s.client.Database(s.options.Database).Collection(s.options.RepositoryCollection)
-	res, err := collection.Find(ctx, bson.M{}, mopt.Find().SetLimit(int64(limit)).SetSkip(int64(offset)))
+	res, err := collection.Find(ctx, bson.M{}, mopt.Find().SetLimit(int64(limit)).SetSkip(int64(offset)).SetSort(bson.M{"createAt": -1}))
 	if err != nil {
 		return nil, errors.Wrap(err, "mongo.Collection.Find failed")
 	}

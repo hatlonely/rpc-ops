@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -32,22 +33,20 @@ func TestRepository(t *testing.T) {
 		})
 		So(err, ShouldBeNil)
 
-		_, _ = s.client.Database("ops").Collection("repository").DeleteMany(context.Background(), bson.M{
-			"endpoint": "github.com",
-			"name":     "rpc-ops",
-		})
-		_, _ = s.client.Database("ops").Collection("repository").DeleteMany(context.Background(), bson.M{
-			"endpoint": "test-endpoint",
-			"name":     "test-name",
-		})
+		for i := 0; i < 10; i++ {
+			_, _ = s.client.Database("ops").Collection("repository").DeleteMany(context.Background(), bson.M{
+				"endpoint": fmt.Sprintf("test-endpoint-%v", i),
+				"name":     fmt.Sprintf("test-name-%v", i),
+			})
+		}
 
 		var id string
 		{
 			id, err = s.PutRepository(context.Background(), &Repository{
-				Username: "hatlonely",
-				Password: "123456",
-				Endpoint: "github.com",
-				Name:     "rpc-ops",
+				Username: "test-username-1",
+				Password: "test-password-1",
+				Endpoint: "test-endpoint-1",
+				Name:     "test-name-1",
 			})
 			So(err, ShouldBeNil)
 			So(id, ShouldNotBeEmpty)
@@ -55,28 +54,28 @@ func TestRepository(t *testing.T) {
 			repository, err := s.GetRepository(context.Background(), id)
 			So(err, ShouldBeNil)
 			So(repository.ID, ShouldEqual, id)
-			So(repository.Username, ShouldEqual, "hatlonely")
-			So(repository.Password, ShouldEqual, "123456")
-			So(repository.Endpoint, ShouldEqual, "github.com")
-			So(repository.Name, ShouldEqual, "rpc-ops")
+			So(repository.Username, ShouldEqual, "test-username-1")
+			So(repository.Password, ShouldEqual, "test-password-1")
+			So(repository.Endpoint, ShouldEqual, "test-endpoint-1")
+			So(repository.Name, ShouldEqual, "test-name-1")
 		}
 
 		{
 			err = s.UpdateRepository(context.Background(), &Repository{
 				ID:       id,
-				Password: "121231",
-				Endpoint: "test-endpoint",
-				Name:     "test-name",
+				Password: "test-password-2",
+				Endpoint: "test-endpoint-2",
+				Name:     "test-name-2",
 			})
 			So(err, ShouldBeNil)
 
 			repository, err := s.GetRepository(context.Background(), id)
 			So(err, ShouldBeNil)
 			So(repository.ID, ShouldEqual, id)
-			So(repository.Username, ShouldEqual, "hatlonely")
-			So(repository.Password, ShouldEqual, "121231")
-			So(repository.Endpoint, ShouldEqual, "test-endpoint")
-			So(repository.Name, ShouldEqual, "test-name")
+			So(repository.Username, ShouldEqual, "test-username-1")
+			So(repository.Password, ShouldEqual, "test-password-2")
+			So(repository.Endpoint, ShouldEqual, "test-endpoint-2")
+			So(repository.Name, ShouldEqual, "test-name-2")
 		}
 
 		{
@@ -86,6 +85,26 @@ func TestRepository(t *testing.T) {
 			repository, err := s.GetRepository(context.Background(), id)
 			So(errors.Cause(err), ShouldEqual, mongo.ErrNoDocuments)
 			So(repository, ShouldBeNil)
+		}
+
+		{
+			var ids []string
+			for i := 0; i < 10; i++ {
+				id, err := s.PutRepository(context.Background(), &Repository{
+					Username: fmt.Sprintf("test-username-%v", i),
+					Password: fmt.Sprintf("test-password-%v", i),
+					Endpoint: fmt.Sprintf("test-endpoint-%v", i),
+					Name:     fmt.Sprintf("test-name-%v", i),
+				})
+				So(err, ShouldBeNil)
+				ids = append(ids, id)
+			}
+
+			repositories, err := s.ListRepository(context.Background(), 3, 4)
+			So(err, ShouldBeNil)
+			for i := 0; i < 4; i++ {
+				fmt.Println(repositories[i])
+			}
 		}
 	})
 }
