@@ -1,0 +1,63 @@
+{
+  "grpcGateway": {
+    "httpPort": 80,
+    "grpcPort": 6080,
+    "exitTimeout": "20s",
+    "validators": [
+      "Default"
+    ],
+    "usePascalNameLogKey": false,
+    "usePascalNameErrKey": false,
+    "marshalUseProtoNames": true,
+    "marshalEmitUnpopulated": false,
+    "unmarshalDiscardUnknown": true,
+    "enableTrace": false,
+    "enableMetric": false,
+    "enablePprof": false,
+    "jaeger": {
+      "serviceName": "rpc-ancient",
+      "sampler": {
+        "type": "const",
+        "param": 1
+      },
+      "reporter": {
+        "logSpans": false
+      }
+    }
+  },
+  "logger": {
+    "grpc": {
+      "level": "Info",
+      "writers": [{
+        "type": "RotateFile",
+        "options": {
+          "filename": "log/app.rpc",
+          "maxAge": "24h",
+          "formatter": {
+            "type": "Json",
+            "options": {
+              "flatMap": true,
+              "pascalNameKey": true
+            }
+          }
+        }
+      }]
+    },
+    "info": {
+      "level": "Info",
+      "writers": [{
+        "type": "RotateFile",
+        "options": {
+          "filename": "log/app.log",
+          "maxAge": "24h",
+          "formatter": {
+            "type": "Json",
+            "options": {
+              "pascalNameKey": true
+            }
+          }
+        }
+      }]
+    }
+  }
+}
