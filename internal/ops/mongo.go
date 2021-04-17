@@ -25,7 +25,7 @@ type Manager struct {
 	options *Options
 }
 
-func NewOpsStorageWithOptions(options *Options, opts ...refx.Option) (*Manager, error) {
+func NewManagerWithOptions(options *Options, opts ...refx.Option) (*Manager, error) {
 	client, err := wrap.NewMongoClientWrapperWithOptions(&options.Mongo, opts...)
 	if err != nil {
 		return nil, errors.WithMessage(err, "wrap.NewMongoClientWrapperWithOptions failed")

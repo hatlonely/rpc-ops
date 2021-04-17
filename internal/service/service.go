@@ -13,9 +13,9 @@ type Options struct {
 }
 
 func NewServiceWithOptions(options *Options, opts ...refx.Option) (*Service, error) {
-	manager, err := ops.NewOpsStorageWithOptions(&options.Ops, opts...)
+	manager, err := ops.NewManagerWithOptions(&options.Ops, opts...)
 	if err != nil {
-		return nil, errors.WithMessage(err, "manager.NewOpsStorageWithOptions failed")
+		return nil, errors.WithMessage(err, "manager.NewManagerWithOptions failed")
 	}
 
 	return &Service{

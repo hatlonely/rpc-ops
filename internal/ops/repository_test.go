@@ -16,7 +16,7 @@ import (
 
 func TestRepository(t *testing.T) {
 	Convey("TestRepository", t, func() {
-		s, err := NewOpsStorageWithOptions(&Options{
+		s, err := NewManagerWithOptions(&Options{
 			Database:             "ops",
 			RepositoryCollection: "repository",
 			Timeout:              10 * time.Second,
