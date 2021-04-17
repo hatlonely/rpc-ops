@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 message Empty {}
 
 message Repository {
-  int32 id = 1;
+  string id = 1;
   string username = 2;
   string password = 3;
   string endpoint = 4;
