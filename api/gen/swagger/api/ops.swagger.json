@@ -186,10 +186,6 @@
     "apiListRepositoryRes": {
       "type": "object",
       "properties": {
-        "total": {
-          "type": "integer",
-          "format": "int32"
-        },
         "repositories": {
           "type": "array",
           "items": {
