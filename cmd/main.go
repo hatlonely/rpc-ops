@@ -45,7 +45,7 @@ func main() {
 	}
 
 	if options.ConfigPath == "" {
-		options.ConfigPath = "config/app.json"
+		options.ConfigPath = "config/base.json"
 	}
 
 	cfg, err := config.NewConfigWithBaseFile(options.ConfigPath, refx.WithCamelName())
