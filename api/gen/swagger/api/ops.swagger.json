@@ -16,6 +16,44 @@
     "application/json"
   ],
   "paths": {
+    "/v1/Job/{id}": {
+      "put": {
+        "operationId": "OpsService_UpdateJob",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiEmpty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiJob"
+            }
+          }
+        ],
+        "tags": [
+          "OpsService"
+        ]
+      }
+    },
     "/v1/describeRepository": {
       "post": {
         "operationId": "OpsService_DescribeRepository",
@@ -41,6 +79,138 @@
             "schema": {
               "$ref": "#/definitions/apiDescribeRepositoryReq"
             }
+          }
+        ],
+        "tags": [
+          "OpsService"
+        ]
+      }
+    },
+    "/v1/job": {
+      "get": {
+        "operationId": "OpsService_ListJob",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiListJobRes"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "repositoryID",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "OpsService"
+        ]
+      },
+      "post": {
+        "operationId": "OpsService_PutJob",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiPutJobRes"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiJob"
+            }
+          }
+        ],
+        "tags": [
+          "OpsService"
+        ]
+      }
+    },
+    "/v1/job/{id}": {
+      "get": {
+        "operationId": "OpsService_GetJob",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiJob"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OpsService"
+        ]
+      },
+      "delete": {
+        "operationId": "OpsService_DelJob",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiEmpty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "tags": [
@@ -266,6 +436,52 @@
     "apiEmpty": {
       "type": "object"
     },
+    "apiJob": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "seq": {
+          "type": "string"
+        },
+        "repositoryID": {
+          "type": "string"
+        },
+        "variableID": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "createAt": {
+          "type": "string"
+        },
+        "updateAt": {
+          "type": "string"
+        },
+        "scheduleAt": {
+          "type": "string"
+        },
+        "elapseSeconds": {
+          "type": "string"
+        },
+        "output": {
+          "type": "string"
+        }
+      }
+    },
+    "apiListJobRes": {
+      "type": "object",
+      "properties": {
+        "jobs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiJob"
+          }
+        }
+      }
+    },
     "apiListRepositoryRes": {
       "type": "object",
       "properties": {
@@ -274,6 +490,14 @@
           "items": {
             "$ref": "#/definitions/apiRepository"
           }
+        }
+      }
+    },
+    "apiPutJobRes": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         }
       }
     },

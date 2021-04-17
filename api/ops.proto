@@ -75,6 +75,28 @@ message Job {
   string output = 10;
 }
 
+message ListJobReq {
+  string repositoryID = 1;
+  int32 offset = 2;
+  int32 limit = 3;
+}
+
+message ListJobRes {
+  repeated Job jobs = 1;
+}
+
+message GetJobReq {
+  string id = 1;
+}
+
+message DelJobReq {
+  string id = 1;
+}
+
+message PutJobRes {
+  string id = 1;
+}
+
 service OpsService {
   rpc ListRepository(ListRepositoryReq) returns (ListRepositoryRes) {
     option (google.api.http) = {
@@ -104,6 +126,38 @@ service OpsService {
   rpc UpdateRepository(Repository) returns (Empty) {
     option (google.api.http) = {
       put: "/v1/repository/{id}"
+      body: "*"
+    };
+  }
+
+  rpc ListJob(ListJobReq) returns (ListJobRes) {
+    option (google.api.http) = {
+      get: "/v1/job"
+    };
+  }
+
+  rpc GetJob(GetJobReq) returns (Job) {
+    option (google.api.http) = {
+      get: "/v1/job/{id}"
+    };
+  }
+
+  rpc DelJob(DelJobReq) returns (Empty) {
+    option (google.api.http) = {
+      delete: "/v1/job/{id}"
+    };
+  }
+
+  rpc PutJob(Job) returns (PutJobRes) {
+    option (google.api.http) = {
+      post: "/v1/job"
+      body: "*"
+    };
+  }
+
+  rpc UpdateJob(Job) returns (Empty) {
+    option (google.api.http) = {
+      put: "/v1/Job/{id}"
       body: "*"
     };
   }
