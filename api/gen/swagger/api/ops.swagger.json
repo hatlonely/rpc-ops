@@ -221,7 +221,7 @@
         "endpoint": {
           "type": "string"
         },
-        "repository": {
+        "name": {
           "type": "string"
         }
       }

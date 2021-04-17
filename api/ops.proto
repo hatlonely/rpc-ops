@@ -13,7 +13,7 @@ message Repository {
   string username = 2;
   string password = 3;
   string endpoint = 4;
-  string repository = 5;
+  string name = 5;
 }
 
 message ListRepositoryReq {
@@ -22,8 +22,7 @@ message ListRepositoryReq {
 }
 
 message ListRepositoryRes {
-  int32 total = 1;
-  repeated Repository repositories = 2;
+  repeated Repository repositories = 1;
 }
 
 message GetRepositoryReq {
