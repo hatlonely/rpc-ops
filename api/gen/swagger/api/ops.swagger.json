@@ -16,44 +16,6 @@
     "application/json"
   ],
   "paths": {
-    "/v1/Job/{id}": {
-      "put": {
-        "operationId": "OpsService_UpdateJob",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/apiEmpty"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/apiJob"
-            }
-          }
-        ],
-        "tags": [
-          "OpsService"
-        ]
-      }
-    },
     "/v1/describeRepository": {
       "post": {
         "operationId": "OpsService_DescribeRepository",
@@ -123,36 +85,6 @@
             "required": false,
             "type": "integer",
             "format": "int32"
-          }
-        ],
-        "tags": [
-          "OpsService"
-        ]
-      },
-      "post": {
-        "operationId": "OpsService_PutJob",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/apiPutJobRes"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/apiJob"
-            }
           }
         ],
         "tags": [
@@ -490,14 +422,6 @@
           "items": {
             "$ref": "#/definitions/apiRepository"
           }
-        }
-      }
-    },
-    "apiPutJobRes": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
         }
       }
     },

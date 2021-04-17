@@ -40,28 +40,6 @@ message PutRepositoryRes {
   string id = 1;
 }
 
-message DescribeRepositoryReq {
-  string id = 1;
-  string version = 2;
-}
-
-message DescribeRepositoryRes {
-  string opsYaml = 1;
-}
-
-message RunOpsReq {
-  string repositoryID = 1;
-  string variableID = 2;
-  string version = 3;
-  string environment = 4;
-  string task = 5;
-  string args = 6;
-}
-
-message RunOpsRes {
-  string jobID = 1;
-}
-
 message Job {
   string id = 1;
   string seq = 2;
@@ -93,8 +71,26 @@ message DelJobReq {
   string id = 1;
 }
 
-message PutJobRes {
+message DescribeRepositoryReq {
   string id = 1;
+  string version = 2;
+}
+
+message DescribeRepositoryRes {
+  string opsYaml = 1;
+}
+
+message RunOpsReq {
+  string repositoryID = 1;
+  string variableID = 2;
+  string version = 3;
+  string environment = 4;
+  string task = 5;
+  string args = 6;
+}
+
+message RunOpsRes {
+  string jobID = 1;
 }
 
 service OpsService {
@@ -145,20 +141,6 @@ service OpsService {
   rpc DelJob(DelJobReq) returns (Empty) {
     option (google.api.http) = {
       delete: "/v1/job/{id}"
-    };
-  }
-
-  rpc PutJob(Job) returns (PutJobRes) {
-    option (google.api.http) = {
-      post: "/v1/job"
-      body: "*"
-    };
-  }
-
-  rpc UpdateJob(Job) returns (Empty) {
-    option (google.api.http) = {
-      put: "/v1/Job/{id}"
-      body: "*"
     };
   }
 
