@@ -25,6 +25,11 @@
       }
     }
   },
+  "service": {
+    "storage": {
+
+    }
+  },
   "logger": {
     "grpc": {
       "level": "Info",

@@ -1,4 +1,4 @@
-package storage
+package ops
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 	mopt "go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type OpsOptions struct {
+type Options struct {
 	Mongo                wrap.MongoClientWrapperOptions
 	Database             string        `dft:"ops"`
 	RepositoryCollection string        `dft:"repository"`
@@ -20,12 +20,12 @@ type OpsOptions struct {
 	JobExpiration        time.Duration `dft:"72h"`
 }
 
-type OpsStorage struct {
+type Manager struct {
 	client  *wrap.MongoClientWrapper
-	options *OpsOptions
+	options *Options
 }
 
-func NewOpsStorageWithOptions(options *OpsOptions, opts ...refx.Option) (*OpsStorage, error) {
+func NewOpsStorageWithOptions(options *Options, opts ...refx.Option) (*Manager, error) {
 	client, err := wrap.NewMongoClientWrapperWithOptions(&options.Mongo, opts...)
 	if err != nil {
 		return nil, errors.WithMessage(err, "wrap.NewMongoClientWrapperWithOptions failed")
@@ -42,7 +42,7 @@ func NewOpsStorageWithOptions(options *OpsOptions, opts ...refx.Option) (*OpsSto
 		}
 	}
 
-	return &OpsStorage{
+	return &Manager{
 		client:  client,
 		options: options,
 	}, nil

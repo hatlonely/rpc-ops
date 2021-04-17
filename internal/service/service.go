@@ -5,27 +5,27 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/hatlonely/rpc-ops/api/gen/go/api"
-	"github.com/hatlonely/rpc-ops/internal/storage"
+	"github.com/hatlonely/rpc-ops/internal/ops"
 )
 
 type Options struct {
-	Storage storage.OpsOptions
+	Ops ops.Options
 }
 
 func NewServiceWithOptions(options *Options, opts ...refx.Option) (*Service, error) {
-	storage, err := storage.NewOpsStorageWithOptions(&options.Storage, opts...)
+	manager, err := ops.NewOpsStorageWithOptions(&options.Ops, opts...)
 	if err != nil {
-		return nil, errors.WithMessage(err, "storage.NewOpsStorageWithOptions failed")
+		return nil, errors.WithMessage(err, "manager.NewOpsStorageWithOptions failed")
 	}
 
 	return &Service{
-		storage: storage,
+		manager: manager,
 		options: options,
 	}, nil
 }
 
 type Service struct {
-	storage *storage.OpsStorage
+	manager *ops.Manager
 	options *Options
 
 	api.UnimplementedOpsServiceServer

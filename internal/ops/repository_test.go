@@ -1,4 +1,4 @@
-package storage
+package ops
 
 import (
 	"context"
@@ -16,7 +16,7 @@ import (
 
 func TestRepository(t *testing.T) {
 	Convey("TestRepository", t, func() {
-		s, err := NewOpsStorageWithOptions(&OpsOptions{
+		s, err := NewOpsStorageWithOptions(&Options{
 			Database:             "ops",
 			RepositoryCollection: "repository",
 			Timeout:              10 * time.Second,

@@ -1,4 +1,4 @@
-package storage
+package ops
 
 import (
 	"context"
@@ -21,7 +21,7 @@ type Repository struct {
 	UpdateAt int32  `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
 }
 
-func (s *OpsStorage) GetRepository(ctx context.Context, id string) (*Repository, error) {
+func (s *Manager) GetRepository(ctx context.Context, id string) (*Repository, error) {
 	collection := s.client.Database(s.options.Database).Collection(s.options.RepositoryCollection)
 	var repository Repository
 	if err := collection.FindOne(ctx, bson.M{"_id": id}).Decode(&repository); err != nil {
@@ -30,7 +30,7 @@ func (s *OpsStorage) GetRepository(ctx context.Context, id string) (*Repository,
 	return &repository, nil
 }
 
-func (s *OpsStorage) DelRepository(ctx context.Context, id string) error {
+func (s *Manager) DelRepository(ctx context.Context, id string) error {
 	collection := s.client.Database(s.options.Database).Collection(s.options.RepositoryCollection)
 	ctx, cancel := context.WithTimeout(ctx, s.options.Timeout)
 	defer cancel()
@@ -41,7 +41,7 @@ func (s *OpsStorage) DelRepository(ctx context.Context, id string) error {
 	return nil
 }
 
-func (s *OpsStorage) PutRepository(ctx context.Context, repository *Repository) (string, error) {
+func (s *Manager) PutRepository(ctx context.Context, repository *Repository) (string, error) {
 	collection := s.client.Database(s.options.Database).Collection(s.options.RepositoryCollection)
 	ctx, cancel := context.WithTimeout(ctx, s.options.Timeout)
 	defer cancel()
@@ -57,7 +57,7 @@ func (s *OpsStorage) PutRepository(ctx context.Context, repository *Repository) 
 	return res.InsertedID.(string), nil
 }
 
-func (s *OpsStorage) UpdateRepository(ctx context.Context, repository *Repository) error {
+func (s *Manager) UpdateRepository(ctx context.Context, repository *Repository) error {
 	collection := s.client.Database(s.options.Database).Collection(s.options.RepositoryCollection)
 	repository.UpdateAt = int32(time.Now().Unix())
 	_, err := collection.UpdateOne(ctx, bson.M{"_id": repository.ID}, bson.M{"$set": repository})
@@ -67,7 +67,7 @@ func (s *OpsStorage) UpdateRepository(ctx context.Context, repository *Repositor
 	return nil
 }
 
-func (s *OpsStorage) ListRepository(ctx context.Context, offset int32, limit int32) ([]*Repository, error) {
+func (s *Manager) ListRepository(ctx context.Context, offset int32, limit int32) ([]*Repository, error) {
 	collection := s.client.Database(s.options.Database).Collection(s.options.RepositoryCollection)
 	res, err := collection.Find(ctx, bson.M{}, mopt.Find().SetLimit(int64(limit)).SetSkip(int64(offset)).SetSort(bson.M{"createAt": -1}))
 	if err != nil {

@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/hatlonely/rpc-ops/api/gen/go/api"
-	"github.com/hatlonely/rpc-ops/internal/storage"
+	"github.com/hatlonely/rpc-ops/internal/ops"
 )
 
 func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq) (*api.ListRepositoryRes, error) {
-	repos, err := s.storage.ListRepository(ctx, req.Offset, req.Limit)
+	repos, err := s.manager.ListRepository(ctx, req.Offset, req.Limit)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq
 }
 
 func (s *Service) GetRepository(ctx context.Context, req *api.GetRepositoryReq) (*api.Repository, error) {
-	repo, err := s.storage.GetRepository(ctx, req.Id)
+	repo, err := s.manager.GetRepository(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (s *Service) GetRepository(ctx context.Context, req *api.GetRepositoryReq) 
 }
 
 func (s *Service) DelRepository(ctx context.Context, req *api.DelRepositoryReq) (*api.Empty, error) {
-	err := s.storage.DelRepository(ctx, req.Id)
+	err := s.manager.DelRepository(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (s *Service) DelRepository(ctx context.Context, req *api.DelRepositoryReq) 
 }
 
 func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.PutRepositoryRes, error) {
-	id, err := s.storage.PutRepository(ctx, &storage.Repository{
+	id, err := s.manager.PutRepository(ctx, &ops.Repository{
 		Username: req.Username,
 		Password: req.Password,
 		Endpoint: req.Endpoint,
@@ -64,7 +64,7 @@ func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.
 }
 
 func (s *Service) UpdateRepository(ctx context.Context, req *api.Repository) (*api.Empty, error) {
-	err := s.storage.UpdateRepository(ctx, &storage.Repository{
+	err := s.manager.UpdateRepository(ctx, &ops.Repository{
 		ID:       req.Id,
 		Username: req.Username,
 		Password: req.Password,
