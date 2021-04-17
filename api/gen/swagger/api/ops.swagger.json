@@ -213,6 +213,18 @@
         "id": {
           "type": "integer",
           "format": "int32"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "endpoint": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
         }
       }
     },
