@@ -12,13 +12,13 @@ import (
 )
 
 type Repository struct {
-	ID       string `json:"id" bson:"_id"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Endpoint string `json:"endpoint"`
-	Name     string `json:"repository"`
-	CreateAt int32  `json:"createAt" bson:"createAt"`
-	UpdateAt int32  `json:"updateAt" bson:"updateAt"`
+	ID       string `json:"id" bson:"_id,omitempty"`
+	Username string `json:"username,omitempty" bson:"username,omitempty"`
+	Password string `json:"password,omitempty" bson:"password,omitempty"`
+	Endpoint string `json:"endpoint,omitempty" bson:"endpoint,omitempty"`
+	Name     string `json:"name,omitempty" bson:"name,omitempty"`
+	CreateAt int32  `json:"createAt,omitempty" bson:"createAt,omitempty"`
+	UpdateAt int32  `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
 }
 
 func (s *OpsStorage) GetRepository(ctx context.Context, id string) (*Repository, error) {

@@ -34,22 +34,47 @@ func TestRepository(t *testing.T) {
 			"endpoint": "github.com",
 			"name":     "rpc-ops",
 		})
-
-		id, err := s.PutRepository(context.Background(), &Repository{
-			Username: "hatlonely",
-			Password: "123456",
-			Endpoint: "github.com",
-			Name:     "rpc-ops",
+		_, _ = s.client.Database("ops").Collection("repository").DeleteMany(context.Background(), bson.M{
+			"endpoint": "test-endpoint",
+			"name":     "test-name",
 		})
-		So(err, ShouldBeNil)
-		So(id, ShouldNotBeEmpty)
 
-		repository, err := s.GetRepository(context.Background(), id)
-		So(err, ShouldBeNil)
-		So(repository.ID, ShouldEqual, id)
-		So(repository.Username, ShouldEqual, "hatlonely")
-		So(repository.Password, ShouldEqual, "123456")
-		So(repository.Endpoint, ShouldEqual, "github.com")
-		So(repository.Name, ShouldEqual, "rpc-ops")
+		var id string
+		{
+			id, err = s.PutRepository(context.Background(), &Repository{
+				Username: "hatlonely",
+				Password: "123456",
+				Endpoint: "github.com",
+				Name:     "rpc-ops",
+			})
+			So(err, ShouldBeNil)
+			So(id, ShouldNotBeEmpty)
+
+			repository, err := s.GetRepository(context.Background(), id)
+			So(err, ShouldBeNil)
+			So(repository.ID, ShouldEqual, id)
+			So(repository.Username, ShouldEqual, "hatlonely")
+			So(repository.Password, ShouldEqual, "123456")
+			So(repository.Endpoint, ShouldEqual, "github.com")
+			So(repository.Name, ShouldEqual, "rpc-ops")
+		}
+
+		{
+			err = s.UpdateRepository(context.Background(), &Repository{
+				ID:       id,
+				Password: "121231",
+				Endpoint: "test-endpoint",
+				Name:     "test-name",
+			})
+			So(err, ShouldBeNil)
+
+			repository, err := s.GetRepository(context.Background(), id)
+			So(err, ShouldBeNil)
+			So(repository.ID, ShouldEqual, id)
+			So(repository.Username, ShouldEqual, "hatlonely")
+			So(repository.Password, ShouldEqual, "121231")
+			So(repository.Endpoint, ShouldEqual, "test-endpoint")
+			So(repository.Name, ShouldEqual, "test-name")
+		}
 	})
 }
