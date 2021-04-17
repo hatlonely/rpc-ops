@@ -220,6 +220,9 @@
         "name": {
           "type": "string"
         },
+        "opsFile": {
+          "type": "string"
+        },
         "createAt": {
           "type": "string"
         },

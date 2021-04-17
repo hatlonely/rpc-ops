@@ -14,8 +14,9 @@ message Repository {
   string password = 3;
   string endpoint = 4;
   string name = 5;
-  string createAt = 6;
-  string updateAt = 7;
+  string opsFile = 6;
+  string createAt = 7;
+  string updateAt = 8;
 }
 
 message ListRepositoryReq {
