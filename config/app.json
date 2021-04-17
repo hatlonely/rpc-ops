@@ -29,7 +29,7 @@
     "ops": {
       "mongo": {
         "retry": {
-          "attempts": 3,
+          "attempts": 1,
           "delay": "1s",
           "maxDelay": "3m",
           "lastErrorOnly": true,

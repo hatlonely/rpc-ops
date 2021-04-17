@@ -48,7 +48,7 @@ func main() {
 		options.ConfigPath = "config/app.json"
 	}
 
-	cfg, err := config.NewConfigWithBaseFile(options.ConfigPath)
+	cfg, err := config.NewConfigWithBaseFile(options.ConfigPath, refx.WithCamelName())
 	refx.Must(err)
 	refx.Must(cfg.Watch())
 	defer cfg.Stop()
