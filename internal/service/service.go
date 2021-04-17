@@ -4,6 +4,7 @@ import (
 	"github.com/hatlonely/go-kit/refx"
 	"github.com/pkg/errors"
 
+	"github.com/hatlonely/rpc-ops/api/gen/go/api"
 	"github.com/hatlonely/rpc-ops/internal/storage"
 )
 
@@ -26,4 +27,6 @@ func NewServiceWithOptions(options *Options, opts ...refx.Option) (*Service, err
 type Service struct {
 	storage *storage.OpsStorage
 	options *Options
+
+	api.UnimplementedOpsServiceServer
 }
