@@ -4,10 +4,12 @@ package api;
 
 option go_package = "github.com/hatlonely/rpc-ops/api/gen/go/api";
 
+import "google/api/annotations.proto";
+
 message Empty {}
 
 message Repository {
-  int64 id = 1;
+  int32 id = 1;
 }
 
 message ListRepositoryReq {
@@ -16,7 +18,8 @@ message ListRepositoryReq {
 }
 
 message ListRepositoryRes {
-  repeated Repository repositories = 1;
+  int32 total = 1;
+  repeated Repository repositories = 2;
 }
 
 message GetRepositoryReq {
@@ -59,7 +62,7 @@ service OpsService {
 
   rpc UpdateRepository(Repository) returns (Empty) {
     option (google.api.http) = {
-      put: "/v1/repository/{repository.id}"
+      put: "/v1/repository/{id}"
       body: "*"
     };
   }
