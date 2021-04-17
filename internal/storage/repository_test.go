@@ -7,8 +7,10 @@ import (
 
 	"github.com/hatlonely/go-kit/micro"
 	"github.com/hatlonely/go-kit/wrap"
+	"github.com/pkg/errors"
 	. "github.com/smartystreets/goconvey/convey"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func TestRepository(t *testing.T) {
@@ -75,6 +77,15 @@ func TestRepository(t *testing.T) {
 			So(repository.Password, ShouldEqual, "121231")
 			So(repository.Endpoint, ShouldEqual, "test-endpoint")
 			So(repository.Name, ShouldEqual, "test-name")
+		}
+
+		{
+			err = s.DelRepository(context.Background(), id)
+			So(err, ShouldBeNil)
+
+			repository, err := s.GetRepository(context.Background(), id)
+			So(errors.Cause(err), ShouldEqual, mongo.ErrNoDocuments)
+			So(repository, ShouldBeNil)
 		}
 	})
 }
