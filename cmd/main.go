@@ -54,7 +54,7 @@ func main() {
 	defer cfg.Stop()
 
 	refx.Must(bind.Bind(&options, []bind.Getter{
-		flag.Instance(), bind.NewEnvGetter(bind.WithEnvPrefix("ANCIENT")), cfg,
+		flag.Instance(), bind.NewEnvGetter(bind.WithEnvPrefix("OPS")), cfg,
 	}, refx.WithCamelName()))
 
 	grpcLog, err := logger.NewLoggerWithOptions(&options.Logger.Grpc, refx.WithCamelName())
