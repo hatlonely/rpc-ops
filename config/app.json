@@ -26,8 +26,30 @@
     }
   },
   "service": {
-    "storage": {
-
+    "ops": {
+      "mongo": {
+        "retry": {
+          "attempts": 3,
+          "delay": "1s",
+          "maxDelay": "3m",
+          "lastErrorOnly": true,
+          "delayType": "BackOff"
+        },
+        "wrapper": {
+          "name": "mongo",
+          "enableTrace": false,
+          "enableMetric": false
+        },
+        "mongo": {
+          "uri": "mongodb://localhost:27017",
+          "connectTimeout": "3s",
+          "pingTimeout": "2s"
+        }
+      },
+      "database": "ops",
+      "repositoryCollection": "repository",
+      "timeout": "10s",
+      "jobExpiration": "72h"
     }
   },
   "logger": {
