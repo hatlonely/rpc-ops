@@ -2,13 +2,13 @@ package storage
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
 	"github.com/hatlonely/go-kit/micro"
 	"github.com/hatlonely/go-kit/wrap"
 	. "github.com/smartystreets/goconvey/convey"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func TestRepository(t *testing.T) {
@@ -30,6 +30,11 @@ func TestRepository(t *testing.T) {
 		})
 		So(err, ShouldBeNil)
 
+		_, _ = s.client.Database("ops").Collection("repository").DeleteMany(context.Background(), bson.M{
+			"endpoint": "github.com",
+			"name":     "rpc-ops",
+		})
+
 		id, err := s.PutRepository(context.Background(), &Repository{
 			Username: "hatlonely",
 			Password: "123456",
@@ -37,6 +42,14 @@ func TestRepository(t *testing.T) {
 			Name:     "rpc-ops",
 		})
 		So(err, ShouldBeNil)
-		fmt.Println(id)
+		So(id, ShouldNotBeEmpty)
+
+		repository, err := s.GetRepository(context.Background(), id)
+		So(err, ShouldBeNil)
+		So(repository.ID, ShouldEqual, id)
+		So(repository.Username, ShouldEqual, "hatlonely")
+		So(repository.Password, ShouldEqual, "123456")
+		So(repository.Endpoint, ShouldEqual, "github.com")
+		So(repository.Name, ShouldEqual, "rpc-ops")
 	})
 }
