@@ -219,6 +219,12 @@
         },
         "name": {
           "type": "string"
+        },
+        "createAt": {
+          "type": "string"
+        },
+        "updateAt": {
+          "type": "string"
         }
       }
     },
