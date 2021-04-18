@@ -46,6 +46,10 @@ func (s *Manager) DelJob(ctx context.Context, id string) error {
 }
 
 func (s *Manager) PutJob(ctx context.Context, job *Job) (string, error) {
+	seq, err := s.IncSequence(ctx, job.RepositoryID)
+	if err != nil {
+		return "", errors.Wrap(err, "s.IncSequence failed")
+	}
 	collection := s.client.Database(s.options.Database).Collection(s.options.JobCollection)
 	ctx, cancel := context.WithTimeout(ctx, s.options.Timeout)
 	defer cancel()
@@ -54,6 +58,7 @@ func (s *Manager) PutJob(ctx context.Context, job *Job) (string, error) {
 	job.ID = string(buf)
 	job.CreateAt = time.Now()
 	job.UpdateAt = time.Now()
+	job.Seq = seq
 	res, err := collection.InsertOne(ctx, job)
 	if err != nil {
 		return "", errors.Wrap(err, "mongo.Collection.InsertOne failed")
