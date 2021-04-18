@@ -64,6 +64,8 @@ message Variable {
   string id = 1;
   string name = 2;
   string body = 3;
+  string createAt = 4;
+  string updateAt = 5;
 }
 
 message VariableID {
