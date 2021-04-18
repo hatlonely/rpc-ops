@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"sort"
 	"syscall"
 
 	"github.com/hatlonely/go-kit/config"
@@ -26,12 +27,14 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 	command := s.generateGitCloneCommand(repo, req.Version)
 	workDir := fmt.Sprintf("%s/%s/%s/%s", s.options.WorkRoot, repo.Endpoint, repo.Username, repo.Name)
 
-	status, stdin, stdout, err := ExecCommand(command, nil, workDir)
-	if err != nil {
-		return nil, errors.Wrapf(err, "ExecCommand failed. command: [%v]", command)
-	}
-	if status != 0 {
-		return nil, errors.Errorf("ExecCommand status not ok. status: [%v], stdin: [%v], stdout: [%v]", status, stdin, stdout)
+	if _, err := os.Stat(fmt.Sprintf("%s/%s", workDir, req.Version)); os.IsNotExist(err) {
+		status, stdin, stdout, err := ExecCommand(command, nil, workDir)
+		if err != nil {
+			return nil, errors.Wrapf(err, "ExecCommand failed. command: [%v]", command)
+		}
+		if status != 0 {
+			return nil, errors.Errorf("ExecCommand status not ok. status: [%v], stdin: [%v], stdout: [%v]", status, stdin, stdout)
+		}
 	}
 
 	var playbook gops.Playbook
@@ -43,7 +46,44 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 		return nil, errors.Wrap(err, "cfg.Unmarshal failed")
 	}
 
-	return &api.Playbook{}, nil
+	var res api.Playbook
+	res.Name = playbook.Name
+	for key, val := range playbook.Env {
+		if key != "default" {
+			res.Envs = append(res.Envs, &api.Playbook_Env{
+				Key: key,
+				Val: val,
+			})
+		}
+	}
+	sort.Slice(res.Envs, func(i, j int) bool {
+		return res.Envs[i].Key < res.Envs[j].Key
+	})
+	for key, val := range playbook.Env {
+		if key == "default" {
+			res.Envs = append([]*api.Playbook_Env{{
+				Key: key,
+				Val: val,
+			}}, res.Envs...)
+		}
+	}
+	for key, val := range playbook.Task {
+		args := map[string]*api.Playbook_Task_Args{}
+		for k, arg := range val.Args {
+			args[k] = &api.Playbook_Task_Args{
+				Type:       arg.Type,
+				Default:    arg.Default,
+				Validation: arg.Validation,
+			}
+		}
+		res.Tasks[key] = &api.Playbook_Task{
+			Args:  args,
+			Const: val.Const,
+			Step:  val.Step,
+		}
+	}
+
+	return &res, nil
 }
 
 func (s *Service) generateGitCloneCommand(repo *ops.Repository, version string) string {
