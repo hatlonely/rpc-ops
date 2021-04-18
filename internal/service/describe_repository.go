@@ -18,7 +18,7 @@ import (
 	"github.com/hatlonely/rpc-ops/internal/ops"
 )
 
-func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepositoryReq) (*api.DescribeRepositoryRes, error) {
+func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepositoryReq) (*api.Playbook, error) {
 	repo, err := s.manager.GetRepository(ctx, req.Id)
 	if err != nil {
 		return nil, errors.WithMessage(err, "s.manager.GetRepository failed")
@@ -43,7 +43,7 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 		return nil, errors.Wrap(err, "cfg.Unmarshal failed")
 	}
 
-	return &api.DescribeRepositoryRes{}, nil
+	return &api.Playbook{}, nil
 }
 
 func (s *Service) generateGitCloneCommand(repo *ops.Repository, version string) string {
