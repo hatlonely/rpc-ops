@@ -9,7 +9,8 @@ import (
 )
 
 type Options struct {
-	Ops ops.Options
+	Ops      ops.Options
+	WorkRoot string
 }
 
 func NewServiceWithOptions(options *Options, opts ...refx.Option) (*Service, error) {
