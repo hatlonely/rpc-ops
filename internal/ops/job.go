@@ -12,16 +12,17 @@ import (
 )
 
 type Job struct {
-	ID            string
-	Seq           int32
-	RepositoryID  string
-	VariableID    string
-	Version       string
-	CreateAt      int32
-	UpdateAt      int32
-	ScheduleAt    int32
-	ElapseSeconds int32
-	Output        string
+	ID            string `json:"id" bson:"_id,omitempty"`
+	Seq           int32  `json:"seq,omitempty" bson:"seq,omitempty"`
+	State         string `json:"state,omitempty" bson:"state,omitempty"`
+	RepositoryID  string `json:"repositoryID,omitempty" bson:"repositoryID,omitempty"`
+	VariableID    string `json:"variableID,omitempty" bson:"variableID,omitempty"`
+	Version       string `json:"version,omitempty" bson:"version,omitempty"`
+	CreateAt      int32  `json:"createAt,omitempty" bson:"createAt,omitempty"`
+	UpdateAt      int32  `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
+	ScheduleAt    int32  `json:"scheduleAt,omitempty" bson:"scheduleAt,omitempty"`
+	ElapseSeconds int32  `json:"elapseSeconds,omitempty" bson:"elapseSeconds,omitempty"`
+	Output        string `json:"output,omitempty" bson:"output,omitempty"`
 }
 
 func (s *Manager) GetJob(ctx context.Context, id string) (*Job, error) {
