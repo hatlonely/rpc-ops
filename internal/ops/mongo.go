@@ -16,6 +16,7 @@ type Options struct {
 	Mongo                wrap.MongoClientWrapperOptions
 	Database             string        `dft:"ops"`
 	RepositoryCollection string        `dft:"repository"`
+	JobCollection        string        `dft:"job"`
 	Timeout              time.Duration `dft:"1s"`
 	JobExpiration        time.Duration `dft:"72h"`
 }

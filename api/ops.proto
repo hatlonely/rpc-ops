@@ -42,7 +42,7 @@ message PutRepositoryRes {
 
 message Job {
   string id = 1;
-  string seq = 2;
+  int32 seq = 2;
   string repositoryID = 3;
   string variableID = 4;
   string version = 5;
