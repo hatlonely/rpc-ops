@@ -19,6 +19,10 @@ message Repository {
   string updateAt = 8;
 }
 
+message RepositoryID {
+  string id = 1;
+}
+
 message ListRepositoryReq {
   int32 offset = 1;
   int32 limit = 2;
@@ -26,10 +30,6 @@ message ListRepositoryReq {
 
 message ListRepositoryRes {
   repeated Repository repositories = 1;
-}
-
-message RepositoryID {
-  string id = 1;
 }
 
 message Job {
@@ -46,6 +46,10 @@ message Job {
   string output = 11;
 }
 
+message JobID {
+  string id = 1;
+}
+
 message ListJobReq {
   string repositoryID = 1;
   int32 offset = 2;
@@ -56,13 +60,23 @@ message ListJobRes {
   repeated Job jobs = 1;
 }
 
-message JobID {
+message Variable {
+  string id = 1;
+  string name = 2;
+  string body = 3;
+}
+
+message VariableID {
   string id = 1;
 }
 
-message Variable {
-  string id = 1;
-  string body = 2;
+message ListVariableReq {
+  int32 offset = 2;
+  int32 limit = 3;
+}
+
+message ListVariableRes {
+  repeated Variable variables = 1;
 }
 
 message DescribeRepositoryReq {
@@ -116,6 +130,38 @@ service OpsService {
   rpc UpdateRepository(Repository) returns (Empty) {
     option (google.api.http) = {
       put: "/v1/repository/{id}"
+      body: "*"
+    };
+  }
+
+  rpc ListVariable(ListVariableReq) returns (ListVariableRes) {
+    option (google.api.http) = {
+      get: "/v1/variable"
+    };
+  }
+
+  rpc GetVariable(VariableID) returns (Variable) {
+    option (google.api.http) = {
+      get: "/v1/variable/{id}"
+    };
+  }
+
+  rpc DelVariable(VariableID) returns (Empty) {
+    option (google.api.http) = {
+      delete: "/v1/variable/{id}"
+    };
+  }
+
+  rpc PutVariable(Variable) returns (VariableID) {
+    option (google.api.http) = {
+      post: "/v1/variable"
+      body: "*"
+    };
+  }
+
+  rpc UpdateVariable(Variable) returns (Empty) {
+    option (google.api.http) = {
+      put: "/v1/variable/{id}"
       body: "*"
     };
   }

@@ -23,6 +23,11 @@ type OpsServiceClient interface {
 	DelRepository(ctx context.Context, in *RepositoryID, opts ...grpc.CallOption) (*Empty, error)
 	PutRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*RepositoryID, error)
 	UpdateRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*Empty, error)
+	ListVariable(ctx context.Context, in *ListVariableReq, opts ...grpc.CallOption) (*ListVariableRes, error)
+	GetVariable(ctx context.Context, in *VariableID, opts ...grpc.CallOption) (*Variable, error)
+	DelVariable(ctx context.Context, in *VariableID, opts ...grpc.CallOption) (*Empty, error)
+	PutVariable(ctx context.Context, in *Variable, opts ...grpc.CallOption) (*VariableID, error)
+	UpdateVariable(ctx context.Context, in *Variable, opts ...grpc.CallOption) (*Empty, error)
 	ListJob(ctx context.Context, in *ListJobReq, opts ...grpc.CallOption) (*ListJobRes, error)
 	GetJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Job, error)
 	DelJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Empty, error)
@@ -83,6 +88,51 @@ func (c *opsServiceClient) UpdateRepository(ctx context.Context, in *Repository,
 	return out, nil
 }
 
+func (c *opsServiceClient) ListVariable(ctx context.Context, in *ListVariableReq, opts ...grpc.CallOption) (*ListVariableRes, error) {
+	out := new(ListVariableRes)
+	err := c.cc.Invoke(ctx, "/api.OpsService/ListVariable", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *opsServiceClient) GetVariable(ctx context.Context, in *VariableID, opts ...grpc.CallOption) (*Variable, error) {
+	out := new(Variable)
+	err := c.cc.Invoke(ctx, "/api.OpsService/GetVariable", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *opsServiceClient) DelVariable(ctx context.Context, in *VariableID, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.OpsService/DelVariable", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *opsServiceClient) PutVariable(ctx context.Context, in *Variable, opts ...grpc.CallOption) (*VariableID, error) {
+	out := new(VariableID)
+	err := c.cc.Invoke(ctx, "/api.OpsService/PutVariable", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *opsServiceClient) UpdateVariable(ctx context.Context, in *Variable, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.OpsService/UpdateVariable", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *opsServiceClient) ListJob(ctx context.Context, in *ListJobReq, opts ...grpc.CallOption) (*ListJobRes, error) {
 	out := new(ListJobRes)
 	err := c.cc.Invoke(ctx, "/api.OpsService/ListJob", in, out, opts...)
@@ -137,6 +187,11 @@ type OpsServiceServer interface {
 	DelRepository(context.Context, *RepositoryID) (*Empty, error)
 	PutRepository(context.Context, *Repository) (*RepositoryID, error)
 	UpdateRepository(context.Context, *Repository) (*Empty, error)
+	ListVariable(context.Context, *ListVariableReq) (*ListVariableRes, error)
+	GetVariable(context.Context, *VariableID) (*Variable, error)
+	DelVariable(context.Context, *VariableID) (*Empty, error)
+	PutVariable(context.Context, *Variable) (*VariableID, error)
+	UpdateVariable(context.Context, *Variable) (*Empty, error)
 	ListJob(context.Context, *ListJobReq) (*ListJobRes, error)
 	GetJob(context.Context, *JobID) (*Job, error)
 	DelJob(context.Context, *JobID) (*Empty, error)
@@ -163,6 +218,21 @@ func (UnimplementedOpsServiceServer) PutRepository(context.Context, *Repository)
 }
 func (UnimplementedOpsServiceServer) UpdateRepository(context.Context, *Repository) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRepository not implemented")
+}
+func (UnimplementedOpsServiceServer) ListVariable(context.Context, *ListVariableReq) (*ListVariableRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListVariable not implemented")
+}
+func (UnimplementedOpsServiceServer) GetVariable(context.Context, *VariableID) (*Variable, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVariable not implemented")
+}
+func (UnimplementedOpsServiceServer) DelVariable(context.Context, *VariableID) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelVariable not implemented")
+}
+func (UnimplementedOpsServiceServer) PutVariable(context.Context, *Variable) (*VariableID, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutVariable not implemented")
+}
+func (UnimplementedOpsServiceServer) UpdateVariable(context.Context, *Variable) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateVariable not implemented")
 }
 func (UnimplementedOpsServiceServer) ListJob(context.Context, *ListJobReq) (*ListJobRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListJob not implemented")
@@ -278,6 +348,96 @@ func _OpsService_UpdateRepository_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OpsServiceServer).UpdateRepository(ctx, req.(*Repository))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OpsService_ListVariable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListVariableReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).ListVariable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/ListVariable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).ListVariable(ctx, req.(*ListVariableReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OpsService_GetVariable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VariableID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).GetVariable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/GetVariable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).GetVariable(ctx, req.(*VariableID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OpsService_DelVariable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VariableID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).DelVariable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/DelVariable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).DelVariable(ctx, req.(*VariableID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OpsService_PutVariable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Variable)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).PutVariable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/PutVariable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).PutVariable(ctx, req.(*Variable))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OpsService_UpdateVariable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Variable)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).UpdateVariable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/UpdateVariable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).UpdateVariable(ctx, req.(*Variable))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -398,6 +558,26 @@ var OpsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateRepository",
 			Handler:    _OpsService_UpdateRepository_Handler,
+		},
+		{
+			MethodName: "ListVariable",
+			Handler:    _OpsService_ListVariable_Handler,
+		},
+		{
+			MethodName: "GetVariable",
+			Handler:    _OpsService_GetVariable_Handler,
+		},
+		{
+			MethodName: "DelVariable",
+			Handler:    _OpsService_DelVariable_Handler,
+		},
+		{
+			MethodName: "PutVariable",
+			Handler:    _OpsService_PutVariable_Handler,
+		},
+		{
+			MethodName: "UpdateVariable",
+			Handler:    _OpsService_UpdateVariable_Handler,
 		},
 		{
 			MethodName: "ListJob",
