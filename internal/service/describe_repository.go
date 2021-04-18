@@ -38,13 +38,13 @@ func (s *Service) generateGitCloneCommand(repo *ops.Repository, version string) 
 	var command string
 	if version != "" {
 		command = fmt.Sprintf(
-			"git clone --depth 1 --branch %s https://%s:%s@%s/%s/%s",
-			version, repo.Username, repo.Password, repo.Endpoint, repo.Username, repo.Name,
+			"git clone --depth 1 --branch %s https://%s:%s@%s/%s/%s.git %s",
+			version, repo.Username, repo.Password, repo.Endpoint, repo.Username, repo.Name, version,
 		)
 	} else {
 		command = fmt.Sprintf(
-			"git clone --depth 1 --branch master https://%s:%s@%s/%s/%s",
-			repo.Username, repo.Password, repo.Endpoint, repo.Username, repo.Name,
+			"git clone --depth 1 --branch master https://%s:%s@%s/%s/%s.git %s",
+			repo.Username, repo.Password, repo.Endpoint, repo.Username, repo.Name, version,
 		)
 	}
 	return command
