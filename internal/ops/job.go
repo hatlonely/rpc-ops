@@ -83,9 +83,9 @@ func (s *Manager) ListJob(ctx context.Context, offset int32, limit int32) ([]*Jo
 		return nil, errors.Wrap(err, "mongo.Collection.Find failed")
 	}
 	defer res.Close(ctx)
-	var repositories []*Job
-	if err := res.All(ctx, &repositories); err != nil {
+	var jobs []*Job
+	if err := res.All(ctx, &jobs); err != nil {
 		return nil, errors.Wrap(err, "mongo.Collection.Find.All failed")
 	}
-	return repositories, nil
+	return jobs, nil
 }

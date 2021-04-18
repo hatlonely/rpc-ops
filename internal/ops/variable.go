@@ -72,9 +72,9 @@ func (s *Manager) ListVariable(ctx context.Context, offset int32, limit int32) (
 		return nil, errors.Wrap(err, "mongo.Collection.Find failed")
 	}
 	defer res.Close(ctx)
-	var repositories []*Variable
-	if err := res.All(ctx, &repositories); err != nil {
+	var variables []*Variable
+	if err := res.All(ctx, &variables); err != nil {
 		return nil, errors.Wrap(err, "mongo.Collection.Find.All failed")
 	}
-	return repositories, nil
+	return variables, nil
 }
