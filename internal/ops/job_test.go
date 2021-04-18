@@ -36,9 +36,8 @@ func TestJob(t *testing.T) {
 		})
 		So(err, ShouldBeNil)
 
-		for i := 0; i < 10; i++ {
-			_, _ = s.client.Database("ops").Collection("job").DeleteMany(context.Background(), bson.M{})
-		}
+		_, err = s.client.Database("ops").Collection("job").DeleteMany(context.Background(), bson.M{})
+		So(err, ShouldBeNil)
 
 		var id string
 		{
