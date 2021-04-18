@@ -11,6 +11,13 @@ import (
 	mopt "go.mongodb.org/mongo-driver/mongo/options"
 )
 
+const (
+	JobStateWaiting  = "Waiting"
+	JobStateRunning  = "Running"
+	JobStateFinished = "Finished"
+	JobStateCanceled = "Canceled"
+)
+
 type Job struct {
 	ID            string    `json:"id" bson:"_id,omitempty"`
 	Seq           int32     `json:"seq,omitempty" bson:"seq,omitempty"`
