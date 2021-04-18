@@ -12,17 +12,17 @@ import (
 )
 
 type Job struct {
-	ID            string `json:"id" bson:"_id,omitempty"`
-	Seq           int32  `json:"seq,omitempty" bson:"seq,omitempty"`
-	State         string `json:"state,omitempty" bson:"state,omitempty"`
-	RepositoryID  string `json:"repositoryID,omitempty" bson:"repositoryID,omitempty"`
-	VariableID    string `json:"variableID,omitempty" bson:"variableID,omitempty"`
-	Version       string `json:"version,omitempty" bson:"version,omitempty"`
-	CreateAt      int32  `json:"createAt,omitempty" bson:"createAt,omitempty"`
-	UpdateAt      int32  `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
-	ScheduleAt    int32  `json:"scheduleAt,omitempty" bson:"scheduleAt,omitempty"`
-	ElapseSeconds int32  `json:"elapseSeconds,omitempty" bson:"elapseSeconds,omitempty"`
-	Output        string `json:"output,omitempty" bson:"output,omitempty"`
+	ID            string    `json:"id" bson:"_id,omitempty"`
+	Seq           int32     `json:"seq,omitempty" bson:"seq,omitempty"`
+	State         string    `json:"state,omitempty" bson:"state,omitempty"`
+	RepositoryID  string    `json:"repositoryID,omitempty" bson:"repositoryID,omitempty"`
+	VariableID    string    `json:"variableID,omitempty" bson:"variableID,omitempty"`
+	Version       string    `json:"version,omitempty" bson:"version,omitempty"`
+	CreateAt      time.Time `json:"createAt,omitempty" bson:"createAt,omitempty"`
+	UpdateAt      time.Time `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
+	ScheduleAt    time.Time `json:"scheduleAt,omitempty" bson:"scheduleAt,omitempty"`
+	ElapseSeconds int32     `json:"elapseSeconds,omitempty" bson:"elapseSeconds,omitempty"`
+	Output        string    `json:"output,omitempty" bson:"output,omitempty"`
 }
 
 func (s *Manager) GetJob(ctx context.Context, id string) (*Job, error) {
@@ -52,8 +52,8 @@ func (s *Manager) PutJob(ctx context.Context, job *Job) (string, error) {
 	buf := make([]byte, 32)
 	hex.Encode(buf, uuid.NewV4().Bytes())
 	job.ID = string(buf)
-	job.CreateAt = int32(time.Now().Unix())
-	job.UpdateAt = int32(time.Now().Unix())
+	job.CreateAt = time.Now()
+	job.UpdateAt = time.Now()
 	res, err := collection.InsertOne(ctx, job)
 	if err != nil {
 		return "", errors.Wrap(err, "mongo.Collection.InsertOne failed")
@@ -63,7 +63,7 @@ func (s *Manager) PutJob(ctx context.Context, job *Job) (string, error) {
 
 func (s *Manager) UpdateJob(ctx context.Context, job *Job) error {
 	collection := s.client.Database(s.options.Database).Collection(s.options.JobCollection)
-	job.UpdateAt = int32(time.Now().Unix())
+	job.UpdateAt = time.Now()
 	_, err := collection.UpdateOne(ctx, bson.M{"_id": job.ID}, bson.M{"$set": job})
 	if err != nil {
 		return errors.Wrapf(err, "mongo.Collection.UpdateOne failed. id: [%v]", job.ID)

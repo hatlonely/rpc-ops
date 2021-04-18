@@ -12,11 +12,11 @@ import (
 )
 
 type Variable struct {
-	ID       string `json:"id" bson:"_id,omitempty"`
-	Name     string `json:"name,omitempty" bson:"name,omitempty"`
-	Body     string `json:"body,omitempty" bson:"body,omitempty"`
-	CreateAt int32  `json:"createAt,omitempty" bson:"createAt,omitempty"`
-	UpdateAt int32  `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
+	ID       string    `json:"id" bson:"_id,omitempty"`
+	Name     string    `json:"name,omitempty" bson:"name,omitempty"`
+	Body     string    `json:"body,omitempty" bson:"body,omitempty"`
+	CreateAt time.Time `json:"createAt,omitempty" bson:"createAt,omitempty"`
+	UpdateAt time.Time `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
 }
 
 func (s *Manager) GetVariable(ctx context.Context, id string) (*Variable, error) {
@@ -46,8 +46,8 @@ func (s *Manager) PutVariable(ctx context.Context, variable *Variable) (string, 
 	buf := make([]byte, 32)
 	hex.Encode(buf, uuid.NewV4().Bytes())
 	variable.ID = string(buf)
-	variable.CreateAt = int32(time.Now().Unix())
-	variable.UpdateAt = int32(time.Now().Unix())
+	variable.CreateAt = time.Now()
+	variable.UpdateAt = time.Now()
 	res, err := collection.InsertOne(ctx, variable)
 	if err != nil {
 		return "", errors.Wrap(err, "mongo.Collection.InsertOne failed")
@@ -57,7 +57,7 @@ func (s *Manager) PutVariable(ctx context.Context, variable *Variable) (string, 
 
 func (s *Manager) UpdateVariable(ctx context.Context, variable *Variable) error {
 	collection := s.client.Database(s.options.Database).Collection(s.options.VariableCollection)
-	variable.UpdateAt = int32(time.Now().Unix())
+	variable.UpdateAt = time.Now()
 	_, err := collection.UpdateOne(ctx, bson.M{"_id": variable.ID}, bson.M{"$set": variable})
 	if err != nil {
 		return errors.Wrapf(err, "mongo.Collection.UpdateOne failed. id: [%v]", variable.ID)
