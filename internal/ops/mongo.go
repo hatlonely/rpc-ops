@@ -17,6 +17,7 @@ type Options struct {
 	Database             string        `dft:"ops"`
 	RepositoryCollection string        `dft:"repository"`
 	VariableCollection   string        `dft:"variable"`
+	SequenceCollection   string        `dft:"sequence"`
 	JobCollection        string        `dft:"job"`
 	Timeout              time.Duration `dft:"1s"`
 	JobExpiration        time.Duration `dft:"72h"`
