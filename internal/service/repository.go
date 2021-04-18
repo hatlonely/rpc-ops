@@ -21,8 +21,8 @@ func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq
 			Password: repo.Password,
 			Endpoint: repo.Endpoint,
 			Name:     repo.Name,
-			CreateAt: time.Unix(int64(repo.CreateAt), 0).Format(time.RFC3339),
-			UpdateAt: time.Unix(int64(repo.UpdateAt), 0).Format(time.RFC3339),
+			CreateAt: repo.CreateAt.Format(time.RFC3339),
+			UpdateAt: repo.UpdateAt.Format(time.RFC3339),
 		})
 	}
 	return &res, nil
@@ -39,6 +39,8 @@ func (s *Service) GetRepository(ctx context.Context, req *api.RepositoryID) (*ap
 		Password: repo.Password,
 		Endpoint: repo.Endpoint,
 		Name:     repo.Name,
+		CreateAt: repo.CreateAt.Format(time.RFC3339),
+		UpdateAt: repo.UpdateAt.Format(time.RFC3339),
 	}, nil
 }
 
