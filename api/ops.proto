@@ -14,7 +14,7 @@ message Repository {
   string password = 3;
   string endpoint = 4;
   string name = 5;
-  string opsFile = 6;
+  string playbook = 6;
   string createAt = 7;
   string updateAt = 8;
 }
@@ -86,8 +86,27 @@ message DescribeRepositoryReq {
   string version = 2;
 }
 
-message DescribeRepositoryRes {
-  string opsYaml = 1;
+message Playbook {
+  message Env {
+    string key = 1;
+    map<string, string> val = 2;
+  }
+  
+  message Task {
+    message Args {
+      string type = 1;
+      string default = 2;
+      string validation = 3;
+    }
+
+    map<string, Args> args = 1;
+    map<string, string> const = 2;
+    repeated string step = 3;
+  }
+
+  string name = 1;
+  repeated Env envs = 2;
+  map<string, Task> tasks = 3;
 }
 
 message RunOpsReq {
@@ -186,7 +205,7 @@ service OpsService {
     };
   }
 
-  rpc DescribeRepository(DescribeRepositoryReq) returns (DescribeRepositoryRes) {
+  rpc DescribeRepository(DescribeRepositoryReq) returns (Playbook) {
     option (google.api.http) = {
       post: "/v1/describeRepository"
       body: "*"

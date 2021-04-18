@@ -23,7 +23,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/apiDescribeRepositoryRes"
+              "$ref": "#/definitions/apiPlaybook"
             }
           },
           "default": {
@@ -508,6 +508,57 @@
     }
   },
   "definitions": {
+    "PlaybookEnv": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "val": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "PlaybookTask": {
+      "type": "object",
+      "properties": {
+        "args": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/TaskArgs"
+          }
+        },
+        "const": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "step": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TaskArgs": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "default": {
+          "type": "string"
+        },
+        "validation": {
+          "type": "string"
+        }
+      }
+    },
     "apiDescribeRepositoryReq": {
       "type": "object",
       "properties": {
@@ -515,14 +566,6 @@
           "type": "string"
         },
         "version": {
-          "type": "string"
-        }
-      }
-    },
-    "apiDescribeRepositoryRes": {
-      "type": "object",
-      "properties": {
-        "opsYaml": {
           "type": "string"
         }
       }
@@ -603,6 +646,26 @@
         }
       }
     },
+    "apiPlaybook": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "envs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaybookEnv"
+          }
+        },
+        "tasks": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/PlaybookTask"
+          }
+        }
+      }
+    },
     "apiRepository": {
       "type": "object",
       "properties": {
@@ -621,7 +684,7 @@
         "name": {
           "type": "string"
         },
-        "opsFile": {
+        "playbook": {
           "type": "string"
         },
         "createAt": {

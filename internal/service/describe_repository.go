@@ -9,6 +9,9 @@ import (
 	"os/exec"
 	"syscall"
 
+	"github.com/hatlonely/go-kit/config"
+	gops "github.com/hatlonely/go-kit/ops"
+	"github.com/hatlonely/go-kit/refx"
 	"github.com/pkg/errors"
 
 	"github.com/hatlonely/rpc-ops/api/gen/go/api"
@@ -31,7 +34,16 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 		return nil, errors.Errorf("ExecCommand status not ok. status: [%v], stdin: [%v], stdout: [%v]", status, stdin, stdout)
 	}
 
-	return nil, nil
+	var playbook gops.Playbook
+	cfg, err := config.NewConfigWithSimpleFile(repo.Playbook)
+	if err != nil {
+		return nil, errors.WithMessagef(err, "config.NewConfigWithSimpleFile failed. playbook: [%v]", repo.Playbook)
+	}
+	if err := cfg.Unmarshal(&playbook, refx.WithCamelName()); err != nil {
+		return nil, errors.Wrap(err, "cfg.Unmarshal failed")
+	}
+
+	return &api.DescribeRepositoryRes{}, nil
 }
 
 func (s *Service) generateGitCloneCommand(repo *ops.Repository, version string) string {

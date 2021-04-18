@@ -31,7 +31,7 @@ type OpsServiceClient interface {
 	ListJob(ctx context.Context, in *ListJobReq, opts ...grpc.CallOption) (*ListJobRes, error)
 	GetJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Job, error)
 	DelJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Empty, error)
-	DescribeRepository(ctx context.Context, in *DescribeRepositoryReq, opts ...grpc.CallOption) (*DescribeRepositoryRes, error)
+	DescribeRepository(ctx context.Context, in *DescribeRepositoryReq, opts ...grpc.CallOption) (*Playbook, error)
 	RunOps(ctx context.Context, in *RunOpsReq, opts ...grpc.CallOption) (*RunOpsRes, error)
 }
 
@@ -160,8 +160,8 @@ func (c *opsServiceClient) DelJob(ctx context.Context, in *JobID, opts ...grpc.C
 	return out, nil
 }
 
-func (c *opsServiceClient) DescribeRepository(ctx context.Context, in *DescribeRepositoryReq, opts ...grpc.CallOption) (*DescribeRepositoryRes, error) {
-	out := new(DescribeRepositoryRes)
+func (c *opsServiceClient) DescribeRepository(ctx context.Context, in *DescribeRepositoryReq, opts ...grpc.CallOption) (*Playbook, error) {
+	out := new(Playbook)
 	err := c.cc.Invoke(ctx, "/api.OpsService/DescribeRepository", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -195,7 +195,7 @@ type OpsServiceServer interface {
 	ListJob(context.Context, *ListJobReq) (*ListJobRes, error)
 	GetJob(context.Context, *JobID) (*Job, error)
 	DelJob(context.Context, *JobID) (*Empty, error)
-	DescribeRepository(context.Context, *DescribeRepositoryReq) (*DescribeRepositoryRes, error)
+	DescribeRepository(context.Context, *DescribeRepositoryReq) (*Playbook, error)
 	RunOps(context.Context, *RunOpsReq) (*RunOpsRes, error)
 	mustEmbedUnimplementedOpsServiceServer()
 }
@@ -243,7 +243,7 @@ func (UnimplementedOpsServiceServer) GetJob(context.Context, *JobID) (*Job, erro
 func (UnimplementedOpsServiceServer) DelJob(context.Context, *JobID) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelJob not implemented")
 }
-func (UnimplementedOpsServiceServer) DescribeRepository(context.Context, *DescribeRepositoryReq) (*DescribeRepositoryRes, error) {
+func (UnimplementedOpsServiceServer) DescribeRepository(context.Context, *DescribeRepositoryReq) (*Playbook, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeRepository not implemented")
 }
 func (UnimplementedOpsServiceServer) RunOps(context.Context, *RunOpsReq) (*RunOpsRes, error) {

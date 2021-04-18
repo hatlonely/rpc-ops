@@ -21,6 +21,7 @@ func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq
 			Password: repo.Password,
 			Endpoint: repo.Endpoint,
 			Name:     repo.Name,
+			Playbook: repo.Playbook,
 			CreateAt: repo.CreateAt.Format(time.RFC3339),
 			UpdateAt: repo.UpdateAt.Format(time.RFC3339),
 		})
@@ -39,6 +40,7 @@ func (s *Service) GetRepository(ctx context.Context, req *api.RepositoryID) (*ap
 		Password: repo.Password,
 		Endpoint: repo.Endpoint,
 		Name:     repo.Name,
+		Playbook: repo.Playbook,
 		CreateAt: repo.CreateAt.Format(time.RFC3339),
 		UpdateAt: repo.UpdateAt.Format(time.RFC3339),
 	}, nil
@@ -58,6 +60,7 @@ func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.
 		Password: req.Password,
 		Endpoint: req.Endpoint,
 		Name:     req.Name,
+		Playbook: req.Playbook,
 	})
 	if err != nil {
 		return nil, err
@@ -72,6 +75,7 @@ func (s *Service) UpdateRepository(ctx context.Context, req *api.Repository) (*a
 		Password: req.Password,
 		Endpoint: req.Endpoint,
 		Name:     req.Name,
+		Playbook: req.Playbook,
 	})
 	if err != nil {
 		return nil, err
