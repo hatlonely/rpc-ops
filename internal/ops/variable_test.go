@@ -37,7 +37,7 @@ func TestVariable(t *testing.T) {
 		So(err, ShouldBeNil)
 
 		for i := 0; i < 10; i++ {
-			_, _ = s.client.Database("ops").Collection("repository").DeleteMany(context.Background(), bson.M{
+			_, _ = s.client.Database("ops").Collection("variable").DeleteMany(context.Background(), bson.M{
 				"name": fmt.Sprintf("test-name-%v", i),
 			})
 		}
