@@ -28,15 +28,7 @@ message ListRepositoryRes {
   repeated Repository repositories = 1;
 }
 
-message GetRepositoryReq {
-  string id = 1;
-}
-
-message DelRepositoryReq {
-  string id = 1;
-}
-
-message PutRepositoryRes {
+message RepositoryID {
   string id = 1;
 }
 
@@ -64,12 +56,13 @@ message ListJobRes {
   repeated Job jobs = 1;
 }
 
-message GetJobReq {
+message JobID {
   string id = 1;
 }
 
-message DelJobReq {
+message Variable {
   string id = 1;
+  string body = 2;
 }
 
 message DescribeRepositoryReq {
@@ -101,19 +94,19 @@ service OpsService {
     };
   }
 
-  rpc GetRepository(GetRepositoryReq) returns (Repository) {
+  rpc GetRepository(RepositoryID) returns (Repository) {
     option (google.api.http) = {
       get: "/v1/repository/{id}"
     };
   }
 
-  rpc DelRepository(DelRepositoryReq) returns (Empty) {
+  rpc DelRepository(RepositoryID) returns (Empty) {
     option (google.api.http) = {
       delete: "/v1/repository/{id}"
     };
   }
 
-  rpc PutRepository(Repository) returns (PutRepositoryRes) {
+  rpc PutRepository(Repository) returns (RepositoryID) {
     option (google.api.http) = {
       post: "/v1/repository"
       body: "*"
@@ -133,13 +126,13 @@ service OpsService {
     };
   }
 
-  rpc GetJob(GetJobReq) returns (Job) {
+  rpc GetJob(JobID) returns (Job) {
     option (google.api.http) = {
       get: "/v1/job/{id}"
     };
   }
 
-  rpc DelJob(DelJobReq) returns (Empty) {
+  rpc DelJob(JobID) returns (Empty) {
     option (google.api.http) = {
       delete: "/v1/job/{id}"
     };

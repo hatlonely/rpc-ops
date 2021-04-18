@@ -28,7 +28,7 @@ func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq
 	return &res, nil
 }
 
-func (s *Service) GetRepository(ctx context.Context, req *api.GetRepositoryReq) (*api.Repository, error) {
+func (s *Service) GetRepository(ctx context.Context, req *api.RepositoryID) (*api.Repository, error) {
 	repo, err := s.manager.GetRepository(ctx, req.Id)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (s *Service) GetRepository(ctx context.Context, req *api.GetRepositoryReq) 
 	}, nil
 }
 
-func (s *Service) DelRepository(ctx context.Context, req *api.DelRepositoryReq) (*api.Empty, error) {
+func (s *Service) DelRepository(ctx context.Context, req *api.RepositoryID) (*api.Empty, error) {
 	err := s.manager.DelRepository(ctx, req.Id)
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (s *Service) DelRepository(ctx context.Context, req *api.DelRepositoryReq) 
 	return &api.Empty{}, nil
 }
 
-func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.PutRepositoryRes, error) {
+func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.RepositoryID, error) {
 	id, err := s.manager.PutRepository(ctx, &ops.Repository{
 		Username: req.Username,
 		Password: req.Password,
@@ -60,7 +60,7 @@ func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.
 	if err != nil {
 		return nil, err
 	}
-	return &api.PutRepositoryRes{Id: id}, nil
+	return &api.RepositoryID{Id: id}, nil
 }
 
 func (s *Service) UpdateRepository(ctx context.Context, req *api.Repository) (*api.Empty, error) {

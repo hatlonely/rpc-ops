@@ -68,7 +68,7 @@ func local_request_OpsService_ListRepository_0(ctx context.Context, marshaler ru
 }
 
 func request_OpsService_GetRepository_0(ctx context.Context, marshaler runtime.Marshaler, client OpsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetRepositoryReq
+	var protoReq RepositoryID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -94,7 +94,7 @@ func request_OpsService_GetRepository_0(ctx context.Context, marshaler runtime.M
 }
 
 func local_request_OpsService_GetRepository_0(ctx context.Context, marshaler runtime.Marshaler, server OpsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetRepositoryReq
+	var protoReq RepositoryID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -120,7 +120,7 @@ func local_request_OpsService_GetRepository_0(ctx context.Context, marshaler run
 }
 
 func request_OpsService_DelRepository_0(ctx context.Context, marshaler runtime.Marshaler, client OpsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DelRepositoryReq
+	var protoReq RepositoryID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -146,7 +146,7 @@ func request_OpsService_DelRepository_0(ctx context.Context, marshaler runtime.M
 }
 
 func local_request_OpsService_DelRepository_0(ctx context.Context, marshaler runtime.Marshaler, server OpsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DelRepositoryReq
+	var protoReq RepositoryID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -310,7 +310,7 @@ func local_request_OpsService_ListJob_0(ctx context.Context, marshaler runtime.M
 }
 
 func request_OpsService_GetJob_0(ctx context.Context, marshaler runtime.Marshaler, client OpsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetJobReq
+	var protoReq JobID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -336,7 +336,7 @@ func request_OpsService_GetJob_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_OpsService_GetJob_0(ctx context.Context, marshaler runtime.Marshaler, server OpsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetJobReq
+	var protoReq JobID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -362,7 +362,7 @@ func local_request_OpsService_GetJob_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_OpsService_DelJob_0(ctx context.Context, marshaler runtime.Marshaler, client OpsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DelJobReq
+	var protoReq JobID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -388,7 +388,7 @@ func request_OpsService_DelJob_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_OpsService_DelJob_0(ctx context.Context, marshaler runtime.Marshaler, server OpsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DelJobReq
+	var protoReq JobID
 	var metadata runtime.ServerMetadata
 
 	var (

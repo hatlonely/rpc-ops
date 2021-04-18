@@ -19,13 +19,13 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OpsServiceClient interface {
 	ListRepository(ctx context.Context, in *ListRepositoryReq, opts ...grpc.CallOption) (*ListRepositoryRes, error)
-	GetRepository(ctx context.Context, in *GetRepositoryReq, opts ...grpc.CallOption) (*Repository, error)
-	DelRepository(ctx context.Context, in *DelRepositoryReq, opts ...grpc.CallOption) (*Empty, error)
-	PutRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*PutRepositoryRes, error)
+	GetRepository(ctx context.Context, in *RepositoryID, opts ...grpc.CallOption) (*Repository, error)
+	DelRepository(ctx context.Context, in *RepositoryID, opts ...grpc.CallOption) (*Empty, error)
+	PutRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*RepositoryID, error)
 	UpdateRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*Empty, error)
 	ListJob(ctx context.Context, in *ListJobReq, opts ...grpc.CallOption) (*ListJobRes, error)
-	GetJob(ctx context.Context, in *GetJobReq, opts ...grpc.CallOption) (*Job, error)
-	DelJob(ctx context.Context, in *DelJobReq, opts ...grpc.CallOption) (*Empty, error)
+	GetJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Job, error)
+	DelJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Empty, error)
 	DescribeRepository(ctx context.Context, in *DescribeRepositoryReq, opts ...grpc.CallOption) (*DescribeRepositoryRes, error)
 	RunOps(ctx context.Context, in *RunOpsReq, opts ...grpc.CallOption) (*RunOpsRes, error)
 }
@@ -47,7 +47,7 @@ func (c *opsServiceClient) ListRepository(ctx context.Context, in *ListRepositor
 	return out, nil
 }
 
-func (c *opsServiceClient) GetRepository(ctx context.Context, in *GetRepositoryReq, opts ...grpc.CallOption) (*Repository, error) {
+func (c *opsServiceClient) GetRepository(ctx context.Context, in *RepositoryID, opts ...grpc.CallOption) (*Repository, error) {
 	out := new(Repository)
 	err := c.cc.Invoke(ctx, "/api.OpsService/GetRepository", in, out, opts...)
 	if err != nil {
@@ -56,7 +56,7 @@ func (c *opsServiceClient) GetRepository(ctx context.Context, in *GetRepositoryR
 	return out, nil
 }
 
-func (c *opsServiceClient) DelRepository(ctx context.Context, in *DelRepositoryReq, opts ...grpc.CallOption) (*Empty, error) {
+func (c *opsServiceClient) DelRepository(ctx context.Context, in *RepositoryID, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/api.OpsService/DelRepository", in, out, opts...)
 	if err != nil {
@@ -65,8 +65,8 @@ func (c *opsServiceClient) DelRepository(ctx context.Context, in *DelRepositoryR
 	return out, nil
 }
 
-func (c *opsServiceClient) PutRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*PutRepositoryRes, error) {
-	out := new(PutRepositoryRes)
+func (c *opsServiceClient) PutRepository(ctx context.Context, in *Repository, opts ...grpc.CallOption) (*RepositoryID, error) {
+	out := new(RepositoryID)
 	err := c.cc.Invoke(ctx, "/api.OpsService/PutRepository", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (c *opsServiceClient) ListJob(ctx context.Context, in *ListJobReq, opts ...
 	return out, nil
 }
 
-func (c *opsServiceClient) GetJob(ctx context.Context, in *GetJobReq, opts ...grpc.CallOption) (*Job, error) {
+func (c *opsServiceClient) GetJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Job, error) {
 	out := new(Job)
 	err := c.cc.Invoke(ctx, "/api.OpsService/GetJob", in, out, opts...)
 	if err != nil {
@@ -101,7 +101,7 @@ func (c *opsServiceClient) GetJob(ctx context.Context, in *GetJobReq, opts ...gr
 	return out, nil
 }
 
-func (c *opsServiceClient) DelJob(ctx context.Context, in *DelJobReq, opts ...grpc.CallOption) (*Empty, error) {
+func (c *opsServiceClient) DelJob(ctx context.Context, in *JobID, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/api.OpsService/DelJob", in, out, opts...)
 	if err != nil {
@@ -133,13 +133,13 @@ func (c *opsServiceClient) RunOps(ctx context.Context, in *RunOpsReq, opts ...gr
 // for forward compatibility
 type OpsServiceServer interface {
 	ListRepository(context.Context, *ListRepositoryReq) (*ListRepositoryRes, error)
-	GetRepository(context.Context, *GetRepositoryReq) (*Repository, error)
-	DelRepository(context.Context, *DelRepositoryReq) (*Empty, error)
-	PutRepository(context.Context, *Repository) (*PutRepositoryRes, error)
+	GetRepository(context.Context, *RepositoryID) (*Repository, error)
+	DelRepository(context.Context, *RepositoryID) (*Empty, error)
+	PutRepository(context.Context, *Repository) (*RepositoryID, error)
 	UpdateRepository(context.Context, *Repository) (*Empty, error)
 	ListJob(context.Context, *ListJobReq) (*ListJobRes, error)
-	GetJob(context.Context, *GetJobReq) (*Job, error)
-	DelJob(context.Context, *DelJobReq) (*Empty, error)
+	GetJob(context.Context, *JobID) (*Job, error)
+	DelJob(context.Context, *JobID) (*Empty, error)
 	DescribeRepository(context.Context, *DescribeRepositoryReq) (*DescribeRepositoryRes, error)
 	RunOps(context.Context, *RunOpsReq) (*RunOpsRes, error)
 	mustEmbedUnimplementedOpsServiceServer()
@@ -152,13 +152,13 @@ type UnimplementedOpsServiceServer struct {
 func (UnimplementedOpsServiceServer) ListRepository(context.Context, *ListRepositoryReq) (*ListRepositoryRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRepository not implemented")
 }
-func (UnimplementedOpsServiceServer) GetRepository(context.Context, *GetRepositoryReq) (*Repository, error) {
+func (UnimplementedOpsServiceServer) GetRepository(context.Context, *RepositoryID) (*Repository, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRepository not implemented")
 }
-func (UnimplementedOpsServiceServer) DelRepository(context.Context, *DelRepositoryReq) (*Empty, error) {
+func (UnimplementedOpsServiceServer) DelRepository(context.Context, *RepositoryID) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelRepository not implemented")
 }
-func (UnimplementedOpsServiceServer) PutRepository(context.Context, *Repository) (*PutRepositoryRes, error) {
+func (UnimplementedOpsServiceServer) PutRepository(context.Context, *Repository) (*RepositoryID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PutRepository not implemented")
 }
 func (UnimplementedOpsServiceServer) UpdateRepository(context.Context, *Repository) (*Empty, error) {
@@ -167,10 +167,10 @@ func (UnimplementedOpsServiceServer) UpdateRepository(context.Context, *Reposito
 func (UnimplementedOpsServiceServer) ListJob(context.Context, *ListJobReq) (*ListJobRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListJob not implemented")
 }
-func (UnimplementedOpsServiceServer) GetJob(context.Context, *GetJobReq) (*Job, error) {
+func (UnimplementedOpsServiceServer) GetJob(context.Context, *JobID) (*Job, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetJob not implemented")
 }
-func (UnimplementedOpsServiceServer) DelJob(context.Context, *DelJobReq) (*Empty, error) {
+func (UnimplementedOpsServiceServer) DelJob(context.Context, *JobID) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelJob not implemented")
 }
 func (UnimplementedOpsServiceServer) DescribeRepository(context.Context, *DescribeRepositoryReq) (*DescribeRepositoryRes, error) {
@@ -211,7 +211,7 @@ func _OpsService_ListRepository_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _OpsService_GetRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRepositoryReq)
+	in := new(RepositoryID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -223,13 +223,13 @@ func _OpsService_GetRepository_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/api.OpsService/GetRepository",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OpsServiceServer).GetRepository(ctx, req.(*GetRepositoryReq))
+		return srv.(OpsServiceServer).GetRepository(ctx, req.(*RepositoryID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _OpsService_DelRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DelRepositoryReq)
+	in := new(RepositoryID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -241,7 +241,7 @@ func _OpsService_DelRepository_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/api.OpsService/DelRepository",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OpsServiceServer).DelRepository(ctx, req.(*DelRepositoryReq))
+		return srv.(OpsServiceServer).DelRepository(ctx, req.(*RepositoryID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -301,7 +301,7 @@ func _OpsService_ListJob_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _OpsService_GetJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetJobReq)
+	in := new(JobID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -313,13 +313,13 @@ func _OpsService_GetJob_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/api.OpsService/GetJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OpsServiceServer).GetJob(ctx, req.(*GetJobReq))
+		return srv.(OpsServiceServer).GetJob(ctx, req.(*JobID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _OpsService_DelJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DelJobReq)
+	in := new(JobID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -331,7 +331,7 @@ func _OpsService_DelJob_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/api.OpsService/DelJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OpsServiceServer).DelJob(ctx, req.(*DelJobReq))
+		return srv.(OpsServiceServer).DelJob(ctx, req.(*JobID))
 	}
 	return interceptor(ctx, in, info, handler)
 }

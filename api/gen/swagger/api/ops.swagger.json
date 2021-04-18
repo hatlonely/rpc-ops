@@ -193,7 +193,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/apiPutRepositoryRes"
+              "$ref": "#/definitions/apiRepositoryID"
             }
           },
           "default": {
@@ -375,6 +375,10 @@
           "type": "string"
         },
         "seq": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "state": {
           "type": "string"
         },
         "repositoryID": {
@@ -425,14 +429,6 @@
         }
       }
     },
-    "apiPutRepositoryRes": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      }
-    },
     "apiRepository": {
       "type": "object",
       "properties": {
@@ -458,6 +454,14 @@
           "type": "string"
         },
         "updateAt": {
+          "type": "string"
+        }
+      }
+    },
+    "apiRepositoryID": {
+      "type": "object",
+      "properties": {
+        "id": {
           "type": "string"
         }
       }
