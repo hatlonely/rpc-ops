@@ -42,7 +42,7 @@ message Job {
   string createAt = 7;
   string updateAt = 8;
   string scheduleAt = 9;
-  string elapseSeconds = 10;
+  int32 elapseSeconds = 10;
   string output = 11;
 }
 

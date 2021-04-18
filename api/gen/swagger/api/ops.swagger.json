@@ -562,7 +562,8 @@
           "type": "string"
         },
         "elapseSeconds": {
-          "type": "string"
+          "type": "integer",
+          "format": "int32"
         },
         "output": {
           "type": "string"
