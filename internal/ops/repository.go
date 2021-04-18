@@ -12,14 +12,14 @@ import (
 )
 
 type Repository struct {
-	ID       string `json:"id" bson:"_id,omitempty"`
-	Username string `json:"username,omitempty" bson:"username,omitempty"`
-	Password string `json:"password,omitempty" bson:"password,omitempty"`
-	Endpoint string `json:"endpoint,omitempty" bson:"endpoint,omitempty"`
-	Name     string `json:"name,omitempty" bson:"name,omitempty"`
-	OpsFile  string `json:"opsFile,omitempty" bson:"opsFile,omitempty"`
-	CreateAt int32  `json:"createAt,omitempty" bson:"createAt,omitempty"`
-	UpdateAt int32  `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
+	ID       string    `json:"id" bson:"_id,omitempty"`
+	Username string    `json:"username,omitempty" bson:"username,omitempty"`
+	Password string    `json:"password,omitempty" bson:"password,omitempty"`
+	Endpoint string    `json:"endpoint,omitempty" bson:"endpoint,omitempty"`
+	Name     string    `json:"name,omitempty" bson:"name,omitempty"`
+	OpsFile  string    `json:"opsFile,omitempty" bson:"opsFile,omitempty"`
+	CreateAt time.Time `json:"createAt,omitempty" bson:"createAt,omitempty"`
+	UpdateAt time.Time `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
 }
 
 func (s *Manager) GetRepository(ctx context.Context, id string) (*Repository, error) {
@@ -49,8 +49,8 @@ func (s *Manager) PutRepository(ctx context.Context, repository *Repository) (st
 	buf := make([]byte, 32)
 	hex.Encode(buf, uuid.NewV4().Bytes())
 	repository.ID = string(buf)
-	repository.CreateAt = int32(time.Now().Unix())
-	repository.UpdateAt = int32(time.Now().Unix())
+	repository.CreateAt = time.Now()
+	repository.UpdateAt = time.Now()
 	res, err := collection.InsertOne(ctx, repository)
 	if err != nil {
 		return "", errors.Wrap(err, "mongo.Collection.InsertOne failed")
@@ -60,7 +60,7 @@ func (s *Manager) PutRepository(ctx context.Context, repository *Repository) (st
 
 func (s *Manager) UpdateRepository(ctx context.Context, repository *Repository) error {
 	collection := s.client.Database(s.options.Database).Collection(s.options.RepositoryCollection)
-	repository.UpdateAt = int32(time.Now().Unix())
+	repository.UpdateAt = time.Now()
 	_, err := collection.UpdateOne(ctx, bson.M{"_id": repository.ID}, bson.M{"$set": repository})
 	if err != nil {
 		return errors.Wrapf(err, "mongo.Collection.UpdateOne failed. id: [%v]", repository.ID)

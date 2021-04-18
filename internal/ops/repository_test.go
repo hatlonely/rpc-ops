@@ -19,6 +19,9 @@ func TestRepository(t *testing.T) {
 		s, err := NewManagerWithOptions(&Options{
 			Database:             "ops",
 			RepositoryCollection: "repository",
+			VariableCollection:   "variable",
+			SequenceCollection:   "sequence",
+			JobCollection:        "job",
 			Timeout:              10 * time.Second,
 			Mongo: wrap.MongoClientWrapperOptions{
 				Retry: micro.RetryOptions{
