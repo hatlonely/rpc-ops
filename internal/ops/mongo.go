@@ -44,6 +44,39 @@ func NewManagerWithOptions(options *Options, opts ...refx.Option) (*Manager, err
 			return nil, errors.Wrap(err, "mongo.Indexes.CreateMany failed")
 		}
 	}
+	{
+		collection := client.Database(options.Database).Collection(options.VariableCollection)
+		ctx, cancel := context.WithTimeout(context.Background(), options.Timeout)
+		defer cancel()
+		if _, err := collection.Indexes().CreateMany(ctx, []mongo.IndexModel{
+			{Keys: bson.M{"name": 1}, Options: mopt.Index().SetUnique(true).SetName("nameIdx")},
+		}); err != nil {
+			return nil, errors.Wrap(err, "mongo.Indexes.CreateMany failed")
+		}
+	}
+	{
+		collection := client.Database(options.Database).Collection(options.JobCollection)
+		mongoCtx, cancel := context.WithTimeout(context.Background(), options.Timeout)
+		defer cancel()
+		if _, err := collection.Indexes().CreateMany(mongoCtx, []mongo.IndexModel{
+			{Keys: bson.M{"jobID": 1}, Options: mopt.Index().SetName("jobIDIdx")},
+			{Keys: bson.M{"createAt": 1}, Options: mopt.Index().SetName("createAtIdx").SetExpireAfterSeconds(int32(options.JobExpiration.Seconds()))},
+			//{Keys: bson.M{"_createAt": 1}, Options: mopt.Index().SetName("_createAtIdx").SetExpireAfterSeconds(int32(options.JobExpiration.Seconds()))},
+			{Keys: bson.M{"state": 1}, Options: mopt.Index().SetName("stateIdx")},
+		}); err != nil {
+			return nil, errors.Wrap(err, "mongo.Indexes.CreateMany failed")
+		}
+	}
+	{
+		collection := client.Database(options.Database).Collection(options.SequenceCollection)
+		ctx, cancel := context.WithTimeout(context.Background(), options.Timeout)
+		defer cancel()
+		if _, err := collection.Indexes().CreateMany(ctx, []mongo.IndexModel{
+			{Keys: bson.M{"key": 1}, Options: mopt.Index().SetUnique(true).SetName("keyIdx")},
+		}); err != nil {
+			return nil, errors.Wrap(err, "mongo.Indexes.CreateMany failed")
+		}
+	}
 
 	return &Manager{
 		client:  client,
