@@ -28,6 +28,7 @@ type Options struct {
 	Logger struct {
 		Info logger.Options
 		Grpc logger.Options
+		Exec logger.Options
 	}
 }
 
@@ -61,7 +62,11 @@ func main() {
 	refx.Must(err)
 	infoLog, err := logger.NewLoggerWithOptions(&options.Logger.Info, refx.WithCamelName())
 	refx.Must(err)
+	execLog, err := logger.NewLoggerWithOptions(&options.Logger.Exec, refx.WithCamelName())
+	refx.Must(err)
 	infoLog.With("options", options).Info("init config success")
+
+	_ = execLog
 
 	svc, err := service.NewServiceWithOptions(&options.Service)
 	refx.Must(err)
