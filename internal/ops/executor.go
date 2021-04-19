@@ -3,6 +3,7 @@ package ops
 import "github.com/hatlonely/go-kit/logger"
 
 type ExecutorOptions struct {
+	WorkerNum int
 }
 
 func NewExecutorWithOptions(options *ExecutorOptions) (*Executor, error) {

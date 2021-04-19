@@ -96,3 +96,14 @@ func (s *Manager) ListJob(ctx context.Context, offset int32, limit int32) ([]*Jo
 	}
 	return jobs, nil
 }
+
+func (s *Manager) FindOneWaitingJob(ctx context.Context) (*Job, error) {
+	collection := s.client.Database(s.options.Database).Collection(s.options.JobCollection)
+	var job Job
+	if err := collection.FindOneAndUpdate(ctx, bson.M{"state": JobStateWaiting}, bson.D{
+		{"$set", bson.D{{"state", JobStateRunning}}},
+	}).Decode(&job); err != nil {
+		return nil, errors.Wrapf(err, "mongo.Collection.FindOneAndUpdate failed")
+	}
+	return &job, nil
+}

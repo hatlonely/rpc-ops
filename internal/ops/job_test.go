@@ -42,7 +42,7 @@ func TestJob(t *testing.T) {
 		var id string
 		{
 			id, err = s.PutJob(context.Background(), &Job{
-				State:         "Running",
+				State:         JobStateWaiting,
 				RepositoryID:  "test-repository-id-1",
 				VariableID:    "test-variable-id-1",
 				Version:       "test-version-1",
@@ -55,7 +55,7 @@ func TestJob(t *testing.T) {
 			job, err := s.GetJob(context.Background(), id)
 			So(err, ShouldBeNil)
 			So(job.ID, ShouldEqual, id)
-			So(job.State, ShouldEqual, "Running")
+			So(job.State, ShouldEqual, "Waiting")
 			So(job.RepositoryID, ShouldEqual, "test-repository-id-1")
 			So(job.VariableID, ShouldEqual, "test-variable-id-1")
 			So(job.Version, ShouldEqual, "test-version-1")
@@ -66,7 +66,6 @@ func TestJob(t *testing.T) {
 		{
 			err = s.UpdateJob(context.Background(), &Job{
 				ID:            id,
-				State:         "Finished",
 				Version:       "test-version-2",
 				ElapseSeconds: 3,
 				Output:        "test-output-2",
@@ -76,7 +75,19 @@ func TestJob(t *testing.T) {
 			job, err := s.GetJob(context.Background(), id)
 			So(err, ShouldBeNil)
 			So(job.ID, ShouldEqual, id)
-			So(job.State, ShouldEqual, "Finished")
+			So(job.State, ShouldEqual, "Waiting")
+			So(job.RepositoryID, ShouldEqual, "test-repository-id-1")
+			So(job.VariableID, ShouldEqual, "test-variable-id-1")
+			So(job.Version, ShouldEqual, "test-version-2")
+			So(job.ElapseSeconds, ShouldEqual, 3)
+			So(job.Output, ShouldEqual, "test-output-2")
+		}
+
+		{
+			job, err := s.FindOneWaitingJob(context.Background())
+			So(err, ShouldBeNil)
+			So(job.ID, ShouldEqual, id)
+			So(job.State, ShouldEqual, "Waiting")
 			So(job.RepositoryID, ShouldEqual, "test-repository-id-1")
 			So(job.VariableID, ShouldEqual, "test-variable-id-1")
 			So(job.Version, ShouldEqual, "test-version-2")
