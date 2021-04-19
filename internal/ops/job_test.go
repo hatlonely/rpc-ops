@@ -16,7 +16,7 @@ import (
 
 func TestJob(t *testing.T) {
 	Convey("TestJob", t, func() {
-		s, err := NewManagerWithOptions(&Options{
+		s, err := NewManagerWithOptions(&ManagerOptions{
 			Database:             "ops",
 			RepositoryCollection: "repository",
 			VariableCollection:   "variable",

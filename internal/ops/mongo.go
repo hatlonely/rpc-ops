@@ -12,7 +12,7 @@ import (
 	mopt "go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Options struct {
+type ManagerOptions struct {
 	Mongo                wrap.MongoClientWrapperOptions
 	Database             string        `dft:"ops"`
 	RepositoryCollection string        `dft:"repository"`
@@ -25,10 +25,10 @@ type Options struct {
 
 type Manager struct {
 	client  *wrap.MongoClientWrapper
-	options *Options
+	options *ManagerOptions
 }
 
-func NewManagerWithOptions(options *Options, opts ...refx.Option) (*Manager, error) {
+func NewManagerWithOptions(options *ManagerOptions, opts ...refx.Option) (*Manager, error) {
 	client, err := wrap.NewMongoClientWrapperWithOptions(&options.Mongo, opts...)
 	if err != nil {
 		return nil, errors.WithMessage(err, "wrap.NewMongoClientWrapperWithOptions failed")
@@ -61,7 +61,6 @@ func NewManagerWithOptions(options *Options, opts ...refx.Option) (*Manager, err
 		if _, err := collection.Indexes().CreateMany(mongoCtx, []mongo.IndexModel{
 			{Keys: bson.M{"jobID": 1}, Options: mopt.Index().SetName("jobIDIdx")},
 			{Keys: bson.M{"createAt": 1}, Options: mopt.Index().SetName("createAtIdx").SetExpireAfterSeconds(int32(options.JobExpiration.Seconds()))},
-			//{Keys: bson.M{"_createAt": 1}, Options: mopt.Index().SetName("_createAtIdx").SetExpireAfterSeconds(int32(options.JobExpiration.Seconds()))},
 			{Keys: bson.M{"state": 1}, Options: mopt.Index().SetName("stateIdx")},
 		}); err != nil {
 			return nil, errors.Wrap(err, "mongo.Indexes.CreateMany failed")

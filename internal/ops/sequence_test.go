@@ -13,7 +13,7 @@ import (
 
 func TestSequence(t *testing.T) {
 	Convey("TestSequence", t, func() {
-		s, err := NewManagerWithOptions(&Options{
+		s, err := NewManagerWithOptions(&ManagerOptions{
 			Database:             "ops",
 			RepositoryCollection: "repository",
 			VariableCollection:   "variable",

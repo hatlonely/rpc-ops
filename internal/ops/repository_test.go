@@ -16,7 +16,7 @@ import (
 
 func TestRepository(t *testing.T) {
 	Convey("TestRepository", t, func() {
-		s, err := NewManagerWithOptions(&Options{
+		s, err := NewManagerWithOptions(&ManagerOptions{
 			Database:             "ops",
 			RepositoryCollection: "repository",
 			VariableCollection:   "variable",

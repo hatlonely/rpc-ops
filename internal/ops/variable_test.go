@@ -16,7 +16,7 @@ import (
 
 func TestVariable(t *testing.T) {
 	Convey("TestVariable", t, func() {
-		s, err := NewManagerWithOptions(&Options{
+		s, err := NewManagerWithOptions(&ManagerOptions{
 			Database:             "ops",
 			RepositoryCollection: "repository",
 			VariableCollection:   "variable",

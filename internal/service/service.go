@@ -9,7 +9,7 @@ import (
 )
 
 type Options struct {
-	Ops      ops.Options
+	Ops      ops.ManagerOptions
 	WorkRoot string
 }
 
