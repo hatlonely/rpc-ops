@@ -17,6 +17,7 @@ func NewExecutorWithOptions(manager *Manager, options *ExecutorOptions) (*Execut
 	ctx, cancel := context.WithCancel(context.Background())
 
 	return &Executor{
+		options: options,
 		manager: manager,
 		infoLog: logger.NewStdoutJsonLogger(),
 		workLog: logger.NewStdoutJsonLogger(),
