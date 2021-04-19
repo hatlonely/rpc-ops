@@ -24,6 +24,8 @@ type Job struct {
 	State         string    `json:"state,omitempty" bson:"state,omitempty"`
 	RepositoryID  string    `json:"repositoryID,omitempty" bson:"repositoryID,omitempty"`
 	VariableID    string    `json:"variableID,omitempty" bson:"variableID,omitempty"`
+	WorkDirectory string    `json:"workDirectory,omitempty" bson:"workDirectory,omitempty"`
+	Command       string    `json:"command,omitempty" bson:"command,omitempty"`
 	Version       string    `json:"version,omitempty" bson:"version,omitempty"`
 	CreateAt      time.Time `json:"createAt,omitempty" bson:"createAt,omitempty"`
 	UpdateAt      time.Time `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
