@@ -1,8 +1,8 @@
-# openapi.api.OpsServiceApi
+# api.api.OpsServiceApi
 
 ## Load the API package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 All URIs are relative to *http://localhost*
@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 
@@ -74,7 +74,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 
@@ -115,7 +115,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 
@@ -156,7 +156,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var body = new ApiDescribeRepositoryReq(); // ApiDescribeRepositoryReq | 
@@ -197,7 +197,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 
@@ -238,7 +238,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 
@@ -279,7 +279,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 
@@ -320,7 +320,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var repositoryID = repositoryID_example; // String | 
@@ -365,7 +365,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var offset = 56; // int | 
@@ -408,7 +408,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var offset = 56; // int | 
@@ -451,7 +451,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var body = new ApiRepository(); // ApiRepository | 
@@ -492,7 +492,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var body = new ApiVariable(); // ApiVariable | 
@@ -533,7 +533,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var body = new ApiRunOpsReq(); // ApiRunOpsReq | 
@@ -574,7 +574,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 
@@ -617,7 +617,7 @@ No authorization required
 
 ### Example 
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 
 var api_instance = new OpsServiceApi();
 var id = id_example; // String | 

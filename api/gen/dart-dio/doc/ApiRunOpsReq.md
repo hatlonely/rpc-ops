@@ -1,8 +1,8 @@
-# openapi.model.ApiRunOpsReq
+# api.model.ApiRunOpsReq
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties

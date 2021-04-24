@@ -4,19 +4,19 @@
 
 import 'package:dio/dio.dart';
 import 'package:built_value/serializer.dart';
-import 'package:openapi/src/serializers.dart';
-import 'package:openapi/src/auth/api_key_auth.dart';
-import 'package:openapi/src/auth/basic_auth.dart';
-import 'package:openapi/src/auth/oauth.dart';
-import 'package:openapi/src/api/ops_service_api.dart';
+import 'package:api/src/serializers.dart';
+import 'package:api/src/auth/api_key_auth.dart';
+import 'package:api/src/auth/basic_auth.dart';
+import 'package:api/src/auth/oauth.dart';
+import 'package:api/src/api/ops_service_api.dart';
 
-class Openapi {
+class Api {
   static const String basePath = r'http://localhost';
 
   final Dio dio;
   final Serializers serializers;
 
-  Openapi({
+  Api({
     Dio? dio,
     Serializers? serializers,
     String? basePathOverride,

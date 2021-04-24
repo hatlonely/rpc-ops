@@ -1,8 +1,8 @@
-# openapi.model.ProtobufAny
+# api.model.ProtobufAny
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties

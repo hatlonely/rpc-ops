@@ -1,8 +1,8 @@
-# openapi.model.ApiPlaybook
+# api.model.ApiPlaybook
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties

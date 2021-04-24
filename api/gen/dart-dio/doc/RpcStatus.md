@@ -1,8 +1,8 @@
-# openapi.model.RpcStatus
+# api.model.RpcStatus
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties

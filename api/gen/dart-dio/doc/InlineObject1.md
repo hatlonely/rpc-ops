@@ -1,8 +1,8 @@
-# openapi.model.InlineObject1
+# api.model.InlineObject1
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties

@@ -2,8 +2,8 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
-import 'package:openapi/src/model/task_args.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:api/src/model/task_args.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 

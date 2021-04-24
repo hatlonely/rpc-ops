@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
-import 'package:openapi/openapi.dart';
+import 'package:api/api.dart';
 
 
 /// tests for OpsServiceApi
 void main() {
-  final instance = Openapi().getOpsServiceApi();
+  final instance = Api().getOpsServiceApi();
 
   group(OpsServiceApi, () {
     //Future<JsonObject> opsServiceDelJob(String id) async

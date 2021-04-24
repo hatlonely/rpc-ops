@@ -22,7 +22,7 @@ doc/PlaybookTask.md
 doc/ProtobufAny.md
 doc/RpcStatus.md
 doc/TaskArgs.md
-lib/openapi.dart
+lib/api.dart
 lib/src/api.dart
 lib/src/api/ops_service_api.dart
 lib/src/api_util.dart

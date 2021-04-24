@@ -1,8 +1,8 @@
-# openapi.model.ApiVariable
+# api.model.ApiVariable
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties

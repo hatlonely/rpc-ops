@@ -1,8 +1,8 @@
-# openapi.model.ApiDescribeRepositoryReq
+# api.model.ApiDescribeRepositoryReq
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties

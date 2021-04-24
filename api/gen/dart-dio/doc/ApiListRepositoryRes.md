@@ -1,8 +1,8 @@
-# openapi.model.ApiListRepositoryRes
+# api.model.ApiListRepositoryRes
 
 ## Load the model package
 ```dart
-import 'package:openapi/api.dart';
+import 'package:api/api.dart';
 ```
 
 ## Properties
