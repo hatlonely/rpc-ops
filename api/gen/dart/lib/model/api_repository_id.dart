@@ -1,48 +1,71 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class ApiRepositoryID {
-  
-  String id = null;
-  ApiRepositoryID();
+  /// Returns a new [ApiRepositoryID] instance.
+  ApiRepositoryID({
+    this.id,
+  });
+
+  String id;
 
   @override
-  String toString() {
-    return 'ApiRepositoryID[id=$id, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is ApiRepositoryID &&
+     other.id == id;
 
-  ApiRepositoryID.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    id = json['id'];
-  }
+  @override
+  int get hashCode =>
+    (id == null ? 0 : id.hashCode);
+
+  @override
+  String toString() => 'ApiRepositoryID[id=$id]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (id != null)
-      json['id'] = id;
+    final json = <String, dynamic>{};
+    if (id != null) {
+      json[r'id'] = id;
+    }
     return json;
   }
 
-  static List<ApiRepositoryID> listFromJson(List<dynamic> json) {
-    return json == null ? List<ApiRepositoryID>() : json.map((value) => ApiRepositoryID.fromJson(value)).toList();
-  }
+  /// Returns a new [ApiRepositoryID] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static ApiRepositoryID fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : ApiRepositoryID(
+        id: json[r'id'],
+    );
+
+  static List<ApiRepositoryID> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <ApiRepositoryID>[]
+      : json.map((v) => ApiRepositoryID.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, ApiRepositoryID> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, ApiRepositoryID>();
+    final map = <String, ApiRepositoryID>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = ApiRepositoryID.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = ApiRepositoryID.fromJson(v));
     }
     return map;
   }
 
   // maps a json object with a list of ApiRepositoryID-objects as value to a dart map
-  static Map<String, List<ApiRepositoryID>> mapListFromJson(Map<String, dynamic> json) {
-    var map = Map<String, List<ApiRepositoryID>>();
-     if (json != null && json.isNotEmpty) {
-       json.forEach((String key, dynamic value) {
-         map[key] = ApiRepositoryID.listFromJson(value);
-       });
-     }
-     return map;
+  static Map<String, List<ApiRepositoryID>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<ApiRepositoryID>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = ApiRepositoryID.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
+    }
+    return map;
   }
 }
 

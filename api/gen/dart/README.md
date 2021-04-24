@@ -40,14 +40,14 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:openapi/api.dart';
 
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
 
 try {
-    var result = api_instance.opsServiceDelJob(id);
+    final result = api_instance.opsServiceDelJob(id);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceDelJob: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceDelJob: $e\n');
 }
 
 ```
@@ -89,6 +89,8 @@ Class | Method | HTTP request | Description
  - [ApiRunOpsRes](doc//ApiRunOpsRes.md)
  - [ApiVariable](doc//ApiVariable.md)
  - [ApiVariableID](doc//ApiVariableID.md)
+ - [InlineObject](doc//InlineObject.md)
+ - [InlineObject1](doc//InlineObject1.md)
  - [PlaybookEnv](doc//PlaybookEnv.md)
  - [PlaybookTask](doc//PlaybookTask.md)
  - [ProtobufAny](doc//ProtobufAny.md)

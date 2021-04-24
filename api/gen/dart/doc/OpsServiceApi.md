@@ -9,21 +9,21 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**opsServiceDelJob**](OpsServiceApi.md#opsServiceDelJob) | **DELETE** /v1/job/{id} | 
-[**opsServiceDelRepository**](OpsServiceApi.md#opsServiceDelRepository) | **DELETE** /v1/repository/{id} | 
-[**opsServiceDelVariable**](OpsServiceApi.md#opsServiceDelVariable) | **DELETE** /v1/variable/{id} | 
-[**opsServiceDescribeRepository**](OpsServiceApi.md#opsServiceDescribeRepository) | **POST** /v1/describeRepository | 
-[**opsServiceGetJob**](OpsServiceApi.md#opsServiceGetJob) | **GET** /v1/job/{id} | 
-[**opsServiceGetRepository**](OpsServiceApi.md#opsServiceGetRepository) | **GET** /v1/repository/{id} | 
-[**opsServiceGetVariable**](OpsServiceApi.md#opsServiceGetVariable) | **GET** /v1/variable/{id} | 
-[**opsServiceListJob**](OpsServiceApi.md#opsServiceListJob) | **GET** /v1/job | 
-[**opsServiceListRepository**](OpsServiceApi.md#opsServiceListRepository) | **GET** /v1/repository | 
-[**opsServiceListVariable**](OpsServiceApi.md#opsServiceListVariable) | **GET** /v1/variable | 
-[**opsServicePutRepository**](OpsServiceApi.md#opsServicePutRepository) | **POST** /v1/repository | 
-[**opsServicePutVariable**](OpsServiceApi.md#opsServicePutVariable) | **POST** /v1/variable | 
-[**opsServiceRunOps**](OpsServiceApi.md#opsServiceRunOps) | **POST** /v1/runOps | 
-[**opsServiceUpdateRepository**](OpsServiceApi.md#opsServiceUpdateRepository) | **PUT** /v1/repository/{id} | 
-[**opsServiceUpdateVariable**](OpsServiceApi.md#opsServiceUpdateVariable) | **PUT** /v1/variable/{id} | 
+[**opsServiceDelJob**](OpsServiceApi.md#opsservicedeljob) | **DELETE** /v1/job/{id} | 
+[**opsServiceDelRepository**](OpsServiceApi.md#opsservicedelrepository) | **DELETE** /v1/repository/{id} | 
+[**opsServiceDelVariable**](OpsServiceApi.md#opsservicedelvariable) | **DELETE** /v1/variable/{id} | 
+[**opsServiceDescribeRepository**](OpsServiceApi.md#opsservicedescriberepository) | **POST** /v1/describeRepository | 
+[**opsServiceGetJob**](OpsServiceApi.md#opsservicegetjob) | **GET** /v1/job/{id} | 
+[**opsServiceGetRepository**](OpsServiceApi.md#opsservicegetrepository) | **GET** /v1/repository/{id} | 
+[**opsServiceGetVariable**](OpsServiceApi.md#opsservicegetvariable) | **GET** /v1/variable/{id} | 
+[**opsServiceListJob**](OpsServiceApi.md#opsservicelistjob) | **GET** /v1/job | 
+[**opsServiceListRepository**](OpsServiceApi.md#opsservicelistrepository) | **GET** /v1/repository | 
+[**opsServiceListVariable**](OpsServiceApi.md#opsservicelistvariable) | **GET** /v1/variable | 
+[**opsServicePutRepository**](OpsServiceApi.md#opsserviceputrepository) | **POST** /v1/repository | 
+[**opsServicePutVariable**](OpsServiceApi.md#opsserviceputvariable) | **POST** /v1/variable | 
+[**opsServiceRunOps**](OpsServiceApi.md#opsservicerunops) | **POST** /v1/runOps | 
+[**opsServiceUpdateRepository**](OpsServiceApi.md#opsserviceupdaterepository) | **PUT** /v1/repository/{id} | 
+[**opsServiceUpdateVariable**](OpsServiceApi.md#opsserviceupdatevariable) | **PUT** /v1/variable/{id} | 
 
 
 # **opsServiceDelJob**
@@ -35,14 +35,14 @@ Method | HTTP request | Description
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
 
 try { 
-    var result = api_instance.opsServiceDelJob(id);
+    final result = api_instance.opsServiceDelJob(id);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceDelJob: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceDelJob: $e\n');
 }
 ```
 
@@ -50,7 +50,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -76,14 +76,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
 
 try { 
-    var result = api_instance.opsServiceDelRepository(id);
+    final result = api_instance.opsServiceDelRepository(id);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceDelRepository: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceDelRepository: $e\n');
 }
 ```
 
@@ -91,7 +91,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -117,14 +117,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
 
 try { 
-    var result = api_instance.opsServiceDelVariable(id);
+    final result = api_instance.opsServiceDelVariable(id);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceDelVariable: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceDelVariable: $e\n');
 }
 ```
 
@@ -132,7 +132,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -158,14 +158,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var body = ApiDescribeRepositoryReq(); // ApiDescribeRepositoryReq | 
+final api_instance = OpsServiceApi();
+final body = ApiDescribeRepositoryReq(); // ApiDescribeRepositoryReq | 
 
 try { 
-    var result = api_instance.opsServiceDescribeRepository(body);
+    final result = api_instance.opsServiceDescribeRepository(body);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceDescribeRepository: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceDescribeRepository: $e\n');
 }
 ```
 
@@ -199,14 +199,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
 
 try { 
-    var result = api_instance.opsServiceGetJob(id);
+    final result = api_instance.opsServiceGetJob(id);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceGetJob: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceGetJob: $e\n');
 }
 ```
 
@@ -214,7 +214,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -240,14 +240,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
 
 try { 
-    var result = api_instance.opsServiceGetRepository(id);
+    final result = api_instance.opsServiceGetRepository(id);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceGetRepository: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceGetRepository: $e\n');
 }
 ```
 
@@ -255,7 +255,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -281,14 +281,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
 
 try { 
-    var result = api_instance.opsServiceGetVariable(id);
+    final result = api_instance.opsServiceGetVariable(id);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceGetVariable: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceGetVariable: $e\n');
 }
 ```
 
@@ -296,7 +296,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -322,16 +322,16 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var repositoryID = repositoryID_example; // String | 
-var offset = 56; // int | 
-var limit = 56; // int | 
+final api_instance = OpsServiceApi();
+final repositoryID = repositoryID_example; // String | 
+final offset = 56; // int | 
+final limit = 56; // int | 
 
 try { 
-    var result = api_instance.opsServiceListJob(repositoryID, offset, limit);
+    final result = api_instance.opsServiceListJob(repositoryID, offset, limit);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceListJob: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceListJob: $e\n');
 }
 ```
 
@@ -339,9 +339,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **repositoryID** | **String**|  | [optional] [default to null]
- **offset** | **int**|  | [optional] [default to null]
- **limit** | **int**|  | [optional] [default to null]
+ **repositoryID** | **String**|  | [optional] 
+ **offset** | **int**|  | [optional] 
+ **limit** | **int**|  | [optional] 
 
 ### Return type
 
@@ -367,15 +367,15 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var offset = 56; // int | 
-var limit = 56; // int | 
+final api_instance = OpsServiceApi();
+final offset = 56; // int | 
+final limit = 56; // int | 
 
 try { 
-    var result = api_instance.opsServiceListRepository(offset, limit);
+    final result = api_instance.opsServiceListRepository(offset, limit);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceListRepository: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceListRepository: $e\n');
 }
 ```
 
@@ -383,8 +383,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **offset** | **int**|  | [optional] [default to null]
- **limit** | **int**|  | [optional] [default to null]
+ **offset** | **int**|  | [optional] 
+ **limit** | **int**|  | [optional] 
 
 ### Return type
 
@@ -410,15 +410,15 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var offset = 56; // int | 
-var limit = 56; // int | 
+final api_instance = OpsServiceApi();
+final offset = 56; // int | 
+final limit = 56; // int | 
 
 try { 
-    var result = api_instance.opsServiceListVariable(offset, limit);
+    final result = api_instance.opsServiceListVariable(offset, limit);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceListVariable: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceListVariable: $e\n');
 }
 ```
 
@@ -426,8 +426,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **offset** | **int**|  | [optional] [default to null]
- **limit** | **int**|  | [optional] [default to null]
+ **offset** | **int**|  | [optional] 
+ **limit** | **int**|  | [optional] 
 
 ### Return type
 
@@ -453,14 +453,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var body = ApiRepository(); // ApiRepository | 
+final api_instance = OpsServiceApi();
+final body = ApiRepository(); // ApiRepository | 
 
 try { 
-    var result = api_instance.opsServicePutRepository(body);
+    final result = api_instance.opsServicePutRepository(body);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServicePutRepository: $e\n");
+    print('Exception when calling OpsServiceApi->opsServicePutRepository: $e\n');
 }
 ```
 
@@ -494,14 +494,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var body = ApiVariable(); // ApiVariable | 
+final api_instance = OpsServiceApi();
+final body = ApiVariable(); // ApiVariable | 
 
 try { 
-    var result = api_instance.opsServicePutVariable(body);
+    final result = api_instance.opsServicePutVariable(body);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServicePutVariable: $e\n");
+    print('Exception when calling OpsServiceApi->opsServicePutVariable: $e\n');
 }
 ```
 
@@ -535,14 +535,14 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var body = ApiRunOpsReq(); // ApiRunOpsReq | 
+final api_instance = OpsServiceApi();
+final body = ApiRunOpsReq(); // ApiRunOpsReq | 
 
 try { 
-    var result = api_instance.opsServiceRunOps(body);
+    final result = api_instance.opsServiceRunOps(body);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceRunOps: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceRunOps: $e\n');
 }
 ```
 
@@ -576,15 +576,15 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
-var body = ApiRepository(); // ApiRepository | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
+final body = InlineObject(); // InlineObject | 
 
 try { 
-    var result = api_instance.opsServiceUpdateRepository(id, body);
+    final result = api_instance.opsServiceUpdateRepository(id, body);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceUpdateRepository: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceUpdateRepository: $e\n');
 }
 ```
 
@@ -592,8 +592,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
- **body** | [**ApiRepository**](ApiRepository.md)|  | 
+ **id** | **String**|  | 
+ **body** | [**InlineObject**](InlineObject.md)|  | 
 
 ### Return type
 
@@ -619,15 +619,15 @@ No authorization required
 ```dart
 import 'package:openapi/api.dart';
 
-var api_instance = OpsServiceApi();
-var id = id_example; // String | 
-var body = ApiVariable(); // ApiVariable | 
+final api_instance = OpsServiceApi();
+final id = id_example; // String | 
+final body = InlineObject1(); // InlineObject1 | 
 
 try { 
-    var result = api_instance.opsServiceUpdateVariable(id, body);
+    final result = api_instance.opsServiceUpdateVariable(id, body);
     print(result);
 } catch (e) {
-    print("Exception when calling OpsServiceApi->opsServiceUpdateVariable: $e\n");
+    print('Exception when calling OpsServiceApi->opsServiceUpdateVariable: $e\n');
 }
 ```
 
@@ -635,8 +635,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
- **body** | [**ApiVariable**](ApiVariable.md)|  | 
+ **id** | **String**|  | 
+ **body** | [**InlineObject1**](InlineObject1.md)|  | 
 
 ### Return type
 

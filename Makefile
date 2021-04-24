@@ -31,7 +31,7 @@ codegen: api/ops.proto submodule
 	if [ ! -z "$(shell docker ps --filter name=protobuf -q)" ]; then \
 		docker stop protobuf; \
 	fi
-	docker run --name protobuf -d --rm registry.cn-shanghai.aliyuncs.com/imm-dev/protobuf:1.0.0 tail -f /dev/null
+	docker run --name protobuf -d --rm registry.cn-shanghai.aliyuncs.com/hatlonely/protobuf:1.0.0 tail -f /dev/null
 	docker exec protobuf mkdir -p api
 	docker cp $< protobuf:/$<
 	docker cp rpc-api protobuf:/
@@ -40,7 +40,7 @@ codegen: api/ops.proto submodule
 	docker exec protobuf bash -c "protoc -Irpc-api -I. --go-grpc_out api/gen/go --go-grpc_opt paths=source_relative $<"
 	docker exec protobuf bash -c "protoc -Irpc-api -I. --grpc-gateway_out api/gen/go --grpc-gateway_opt logtostderr=true,paths=source_relative $<"
 	docker exec protobuf bash -c "protoc -Irpc-api -I. --openapiv2_out api/gen/swagger --openapiv2_opt logtostderr=true $<"
-	docker exec protobuf bash -c "java -jar openapi-generator-cli-4.3.1.jar generate -i api/gen/swagger/api/ops.swagger.json -g dart -o api/gen/dart"
+	docker exec protobuf bash -c "java -jar openapi-generator-cli-5.1.0.jar generate -i api/gen/swagger/api/ops.swagger.json -g dart -o api/gen/dart"
 	docker cp protobuf:api/gen api
 	docker stop protobuf
 
