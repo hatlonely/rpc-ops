@@ -85,6 +85,22 @@
           }
         }
       }]
+    },
+    "exec": {
+      "level": "Info",
+      "writers": [{
+        "type": "RotateFile",
+        "options": {
+          "filename": "log/exec.log",
+          "maxAge": "24h",
+          "formatter": {
+            "type": "Json",
+            "options": {
+              "pascalNameKey": true
+            }
+          }
+        }
+      }]
     }
   }
 }
