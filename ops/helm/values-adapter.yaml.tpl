@@ -73,7 +73,9 @@ config:
             "mongo": {
               "uri": "${MONGO_ENDPOINT}",
               "connectTimeout": "3s",
-              "pingTimeout": "2s"
+              "pingTimeout": "2s",
+              "username": "root",
+              "password": "${MONGO_PASSWORD}"
             }
           },
           "database": "ops",
