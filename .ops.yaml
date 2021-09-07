@@ -14,7 +14,7 @@ env:
     K8S_CONTEXT: "home-k8s"
     NAMESPACE: "dev"
     PULL_SECRET_NAME: "hatlonely-pull-secret"
-    IMAGE_REPOSITORY: "rpc-account"
+    IMAGE_REPOSITORY: "rpc-ops"
     REPLICA_COUNT: 2
     INGRESS_HOST: "k8s.ops.hatlonely.com"
     SECRET_NAME: "k8s-secret"
