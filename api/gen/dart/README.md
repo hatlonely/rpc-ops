@@ -68,6 +68,7 @@ Class | Method | HTTP request | Description
 *OpsServiceApi* | [**opsServiceListJob**](doc//OpsServiceApi.md#opsservicelistjob) | **GET** /v1/job | 
 *OpsServiceApi* | [**opsServiceListRepository**](doc//OpsServiceApi.md#opsservicelistrepository) | **GET** /v1/repository | 
 *OpsServiceApi* | [**opsServiceListVariable**](doc//OpsServiceApi.md#opsservicelistvariable) | **GET** /v1/variable | 
+*OpsServiceApi* | [**opsServicePing**](doc//OpsServiceApi.md#opsserviceping) | **GET** /ping | 
 *OpsServiceApi* | [**opsServicePutRepository**](doc//OpsServiceApi.md#opsserviceputrepository) | **POST** /v1/repository | 
 *OpsServiceApi* | [**opsServicePutVariable**](doc//OpsServiceApi.md#opsserviceputvariable) | **POST** /v1/variable | 
 *OpsServiceApi* | [**opsServiceRunOps**](doc//OpsServiceApi.md#opsservicerunops) | **POST** /v1/runOps | 

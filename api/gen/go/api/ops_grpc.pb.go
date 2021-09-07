@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OpsServiceClient interface {
+	Ping(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
 	ListRepository(ctx context.Context, in *ListRepositoryReq, opts ...grpc.CallOption) (*ListRepositoryRes, error)
 	GetRepository(ctx context.Context, in *RepositoryID, opts ...grpc.CallOption) (*Repository, error)
 	DelRepository(ctx context.Context, in *RepositoryID, opts ...grpc.CallOption) (*Empty, error)
@@ -45,6 +46,15 @@ type opsServiceClient struct {
 
 func NewOpsServiceClient(cc grpc.ClientConnInterface) OpsServiceClient {
 	return &opsServiceClient{cc}
+}
+
+func (c *opsServiceClient) Ping(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.OpsService/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *opsServiceClient) ListRepository(ctx context.Context, in *ListRepositoryReq, opts ...grpc.CallOption) (*ListRepositoryRes, error) {
@@ -186,6 +196,7 @@ func (c *opsServiceClient) RunOps(ctx context.Context, in *RunOpsReq, opts ...gr
 // All implementations must embed UnimplementedOpsServiceServer
 // for forward compatibility
 type OpsServiceServer interface {
+	Ping(context.Context, *Empty) (*Empty, error)
 	ListRepository(context.Context, *ListRepositoryReq) (*ListRepositoryRes, error)
 	GetRepository(context.Context, *RepositoryID) (*Repository, error)
 	DelRepository(context.Context, *RepositoryID) (*Empty, error)
@@ -208,6 +219,9 @@ type OpsServiceServer interface {
 type UnimplementedOpsServiceServer struct {
 }
 
+func (UnimplementedOpsServiceServer) Ping(context.Context, *Empty) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
 func (UnimplementedOpsServiceServer) ListRepository(context.Context, *ListRepositoryReq) (*ListRepositoryRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRepository not implemented")
 }
@@ -264,6 +278,24 @@ type UnsafeOpsServiceServer interface {
 
 func RegisterOpsServiceServer(s grpc.ServiceRegistrar, srv OpsServiceServer) {
 	s.RegisterService(&OpsService_ServiceDesc, srv)
+}
+
+func _OpsService_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OpsServiceServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.OpsService/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OpsServiceServer).Ping(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _OpsService_ListRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -543,6 +575,10 @@ var OpsService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "api.OpsService",
 	HandlerType: (*OpsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Ping",
+			Handler:    _OpsService_Ping_Handler,
+		},
 		{
 			MethodName: "ListRepository",
 			Handler:    _OpsService_ListRepository_Handler,

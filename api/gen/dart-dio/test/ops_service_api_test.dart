@@ -57,6 +57,11 @@ void main() {
       // TODO
     });
 
+    //Future<JsonObject> opsServicePing() async
+    test('test opsServicePing', () async {
+      // TODO
+    });
+
     //Future<ApiRepositoryID> opsServicePutRepository(ApiRepository body) async
     test('test opsServicePutRepository', () async {
       // TODO

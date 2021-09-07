@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/hatlonely/go-kit/refx"
 	"github.com/pkg/errors"
 
@@ -30,4 +32,8 @@ type Service struct {
 	options *Options
 
 	api.UnimplementedOpsServiceServer
+}
+
+func (s *Service) Ping(ctx context.Context, req *api.Empty) (*api.Empty, error) {
+	return &api.Empty{}, nil
 }

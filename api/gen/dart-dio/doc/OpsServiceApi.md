@@ -19,6 +19,7 @@ Method | HTTP request | Description
 [**opsServiceListJob**](OpsServiceApi.md#opsservicelistjob) | **get** /v1/job | 
 [**opsServiceListRepository**](OpsServiceApi.md#opsservicelistrepository) | **get** /v1/repository | 
 [**opsServiceListVariable**](OpsServiceApi.md#opsservicelistvariable) | **get** /v1/variable | 
+[**opsServicePing**](OpsServiceApi.md#opsserviceping) | **get** /ping | 
 [**opsServicePutRepository**](OpsServiceApi.md#opsserviceputrepository) | **post** /v1/repository | 
 [**opsServicePutVariable**](OpsServiceApi.md#opsserviceputvariable) | **post** /v1/variable | 
 [**opsServiceRunOps**](OpsServiceApi.md#opsservicerunops) | **post** /v1/runOps | 
@@ -432,6 +433,43 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ApiListVariableRes**](ApiListVariableRes.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **opsServicePing**
+> JsonObject opsServicePing()
+
+
+
+### Example 
+```dart
+import 'package:api/api.dart';
+
+var api_instance = new OpsServiceApi();
+
+try { 
+    var result = api_instance.opsServicePing();
+    print(result);
+} catch (e) {
+    print('Exception when calling OpsServiceApi->opsServicePing: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 

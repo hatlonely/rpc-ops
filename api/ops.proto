@@ -123,6 +123,12 @@ message RunOpsRes {
 }
 
 service OpsService {
+  rpc Ping(Empty) returns (Empty) {
+    option (google.api.http) = {
+      get: "/ping"
+    };
+  }
+
   rpc ListRepository(ListRepositoryReq) returns (ListRepositoryRes) {
     option (google.api.http) = {
       get: "/v1/repository"
