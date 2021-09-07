@@ -17,6 +17,12 @@ env:
     REGISTRY_USERNAME: "{{.registry.aliyun.username}}"
     REGISTRY_PASSWORD: "{{.registry.aliyun.password}}"
     REGISTRY_NAMESPACE: "{{.registry.aliyun.namespace}}"
+    ELASTICSEARCH_ENDPOINT: "{{.elasticsearch.endpoint}}"
+    ELASTICSEARCH_PASSWORD: "{{.elasticsearch.password}}"
+    MONGO_ENDPOINT: "mongodb://mongo-mongodb:27017"
+    JAEGER_SAMPLING_SERVER_URL: "http://jaeger-agent.monitoring:5778/sampling"
+    JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT: "jaeger-agent.monitoring:6831"
+
 
 task:
   image:

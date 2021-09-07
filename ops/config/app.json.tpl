@@ -15,13 +15,15 @@
     "enableMetric": false,
     "enablePprof": false,
     "jaeger": {
-      "serviceName": "rpc-ancient",
+      "serviceName": "rpc-ops",
       "sampler": {
         "type": "const",
-        "param": 1
+        "param": 1,
+        "samplingServerURL": "${JAEGER_SAMPLING_SERVER_URL}"
       },
       "reporter": {
-        "logSpans": false
+        "logSpans": false,
+        "localAgentHostPort": "${JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT}"
       }
     }
   },
@@ -41,7 +43,7 @@
           "enableMetric": false
         },
         "mongo": {
-          "uri": "mongodb://localhost:27017",
+          "uri": "${MONGO_ENDPOINT}",
           "connectTimeout": "3s",
           "pingTimeout": "2s"
         }
@@ -65,6 +67,28 @@
             "options": {
               "flatMap": true,
               "pascalNameKey": true
+            }
+          }
+        }
+      }, {
+        "type": "ElasticSearch",
+        "options": {
+          "index": "grpc",
+          "idField": "requestID",
+          "timeout": "200ms",
+          "msgChanLen": 200,
+          "workerNum": 2,
+          "es": {
+            "es": {
+              "uri": "${ELASTICSEARCH_ENDPOINT}",
+              "username": "elastic",
+              "password": "${ELASTICSEARCH_PASSWORD}"
+            },
+            "retry": {
+              "attempt": 3,
+              "delay": "1s",
+              "lastErrorOnly": true,
+              "delayType": "BackOff"
             }
           }
         }
