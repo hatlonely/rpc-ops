@@ -13,11 +13,16 @@ env:
   dev:
     K8S_CONTEXT: "home-k8s"
     NAMESPACE: "dev"
+    PULL_SECRET_NAME: "hatlonely-pull-secret"
+    IMAGE_REPOSITORY: "rpc-account"
+    REPLICA_COUNT: 2
+    INGRESS_HOST: "k8s.ops.hatlonely.com"
+    SECRET_NAME: "k8s-secret"
     REGISTRY_ENDPOINT: "{{.registry.aliyun.endpoint}}"
     REGISTRY_USERNAME: "{{.registry.aliyun.username}}"
     REGISTRY_PASSWORD: "{{.registry.aliyun.password}}"
     REGISTRY_NAMESPACE: "{{.registry.aliyun.namespace}}"
-    ELASTICSEARCH_ENDPOINT: "{{.elasticsearch.endpoint}}"
+    ELASTICSEARCH_ENDPOINT: "https://security-master:9200"
     ELASTICSEARCH_PASSWORD: "{{.elasticsearch.password}}"
     MONGO_ENDPOINT: "mongodb://mongo-mongodb:27017"
     JAEGER_SAMPLING_SERVER_URL: "http://jaeger-agent.monitoring:5778/sampling"
