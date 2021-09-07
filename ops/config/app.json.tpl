@@ -73,7 +73,46 @@
       }, {
         "type": "ElasticSearch",
         "options": {
-          "index": "grpc",
+          "index": "ops-grpc",
+          "idField": "requestID",
+          "timeout": "200ms",
+          "msgChanLen": 200,
+          "workerNum": 2,
+          "es": {
+            "es": {
+              "uri": "${ELASTICSEARCH_ENDPOINT}",
+              "username": "elastic",
+              "password": "${ELASTICSEARCH_PASSWORD}"
+            },
+            "retry": {
+              "attempt": 3,
+              "delay": "1s",
+              "lastErrorOnly": true,
+              "delayType": "BackOff"
+            }
+          }
+        }
+      }]
+    },
+    "exec": {
+      "level": "Info",
+      "writers": [{
+        "type": "RotateFile",
+        "options": {
+          "filename": "log/exec.log",
+          "maxAge": "24h",
+          "formatter": {
+            "type": "Json",
+            "options": {
+              "flatMap": true,
+              "pascalNameKey": true
+            }
+          }
+        }
+      }, {
+        "type": "ElasticSearch",
+        "options": {
+          "index": "ops-exec",
           "idField": "requestID",
           "timeout": "200ms",
           "msgChanLen": 200,
@@ -105,6 +144,28 @@
             "type": "Json",
             "options": {
               "pascalNameKey": true
+            }
+          }
+        }
+      }, {
+        "type": "ElasticSearch",
+        "options": {
+          "index": "ops-log",
+          "idField": "requestID",
+          "timeout": "200ms",
+          "msgChanLen": 200,
+          "workerNum": 2,
+          "es": {
+            "es": {
+              "uri": "${ELASTICSEARCH_ENDPOINT}",
+              "username": "elastic",
+              "password": "${ELASTICSEARCH_PASSWORD}"
+            },
+            "retry": {
+              "attempt": 3,
+              "delay": "1s",
+              "lastErrorOnly": true,
+              "delayType": "BackOff"
             }
           }
         }
