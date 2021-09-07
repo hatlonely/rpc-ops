@@ -1,0 +1,26 @@
+name: rpc-account
+
+dep:
+  ops:
+    type: git
+    url: "https://github.com/hatlonely/ops.git"
+    version: master
+
+env:
+  default:
+    NAME: "rpc-account"
+  dev:
+    K8S_CONTEXT: "home-k8s"
+    NAMESPACE: "dev"
+    REGISTRY_ENDPOINT: "{{.registry.aliyun.endpoint}}"
+    REGISTRY_USERNAME: "{{.registry.aliyun.username}}"
+    REGISTRY_PASSWORD: "{{.registry.aliyun.password}}"
+    REGISTRY_NAMESPACE: "{{.registry.aliyun.namespace}}"
+
+task:
+  image:
+    step:
+      - make image
+      - docker login --username="${REGISTRY_USERNAME}" --password="${REGISTRY_PASSWORD}" "${REGISTRY_ENDPOINT}"
+      - docker tag "${REGISTRY_NAMESPACE}/${IMAGE_REPOSITORY}:${IMAGE_TAG}" "${REGISTRY_ENDPOINT}/${REGISTRY_NAMESPACE}/${IMAGE_REPOSITORY}:${IMAGE_TAG}"
+      - docker push "${REGISTRY_ENDPOINT}/${REGISTRY_NAMESPACE}/${IMAGE_REPOSITORY}:${IMAGE_TAG}"

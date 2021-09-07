@@ -1,6 +1,10 @@
+REGISTRY_NAMESPACE ?= hatlonely
+IMAGE_TAG ?= $(shell git describe --tags | awk '{print(substr($$0,2,length($$0)))}')
+
 binary=rpc-ops
+namespace=${REGISTRY_NAMESPACE}
 repository=rpc-ops
-version=$(shell git describe --tags | awk '{print(substr($$0,2,length($$0)))}')
+version=${IMAGE_TAG}
 export GOPROXY=https://goproxy.cn
 
 define BUILD_VERSION
@@ -52,4 +56,4 @@ submodule:
 
 .PHONY: image
 image:
-	docker build --tag=hatlonely/${repository}:${version} .
+	docker build --tag=${namespace}/${repository}:${version} .

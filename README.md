@@ -3,5 +3,5 @@
 ## 运维
 
 ```shell
-ops --variable .cfg/rpc-ops.yaml --env hatlonely --task image
+ops --variable .cfg/dev.yaml -a run --env dev --task image
 ```
