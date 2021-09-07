@@ -1,11 +1,11 @@
 {
-  "Decoder": {
-    "Type": "Json"
+  "decoder": {
+    "type": "Json"
   },
-  "Provider": {
-    "Type": "Local",
-    "Options": {
-      "Filename": "app.json"
+  "provider": {
+    "type": "Local",
+    "options": {
+      "filename": "app.json"
     }
   }
 }
