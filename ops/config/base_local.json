@@ -1,6 +1,6 @@
 {
   "Decoder": {
-    "type": "Json"
+    "Type": "Json"
   },
   "Provider": {
     "Type": "Local",
