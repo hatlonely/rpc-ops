@@ -23,6 +23,11 @@
       "reporter": {
         "logSpans": false
       }
+    },
+    "enableCors": true,
+    "cors": {
+      "allowAll": true,
+      "allowMethod": ["GET", "HEAD", "POST", "PUT", "DELETE"],
     }
   },
   "service": {

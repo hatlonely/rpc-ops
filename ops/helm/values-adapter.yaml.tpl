@@ -56,7 +56,8 @@ config:
         },
         "enableCors": true,
         "cors": {
-          "allowAll": true
+          "allowAll": true,
+          "allowMethod": ["GET", "HEAD", "POST", "PUT", "DELETE"],
         }
       },
       "service": {
