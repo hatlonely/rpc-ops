@@ -25,6 +25,10 @@
         "logSpans": false,
         "localAgentHostPort": "${JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT}"
       }
+    },
+    "enableCors": true,
+    "cors": {
+      "allowAll": true
     }
   },
   "service": {
