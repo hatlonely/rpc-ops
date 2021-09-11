@@ -16,7 +16,7 @@ env:
     PULL_SECRET_NAME: "hatlonely-pull-secret"
     IMAGE_REPOSITORY: "rpc-ops"
     REPLICA_COUNT: 2
-    INGRESS_HOST: "k8s.ops.hatlonely.com"
+    INGRESS_HOST: "k8s.rpc.ops.hatlonely.com"
     SECRET_NAME: "k8s-secret"
     REGISTRY_ENDPOINT: "{{.registry.aliyun.endpoint}}"
     REGISTRY_USERNAME: "{{.registry.aliyun.username}}"
