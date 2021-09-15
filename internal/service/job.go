@@ -10,7 +10,7 @@ import (
 func (s *Service) ListJob(ctx context.Context, req *api.ListJobReq) (*api.ListJobRes, error) {
 	jobs, err := s.manager.ListJob(ctx, req.Offset, req.Limit)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	var res api.ListJobRes
 	for _, job := range jobs {
@@ -34,7 +34,7 @@ func (s *Service) ListJob(ctx context.Context, req *api.ListJobReq) (*api.ListJo
 func (s *Service) GetJob(ctx context.Context, req *api.JobID) (*api.Job, error) {
 	job, err := s.manager.GetJob(ctx, req.Id)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Job{
 		Id:            job.ID,
@@ -54,7 +54,7 @@ func (s *Service) GetJob(ctx context.Context, req *api.JobID) (*api.Job, error) 
 func (s *Service) DelJob(ctx context.Context, req *api.JobID) (*api.Empty, error) {
 	err := s.manager.DelJob(ctx, req.Id)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Empty{}, nil
 }

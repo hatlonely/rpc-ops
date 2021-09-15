@@ -11,7 +11,7 @@ import (
 func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq) (*api.ListRepositoryRes, error) {
 	repos, err := s.manager.ListRepository(ctx, req.Offset, req.Limit)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	var res api.ListRepositoryRes
 	for _, repo := range repos {
@@ -33,7 +33,7 @@ func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq
 func (s *Service) GetRepository(ctx context.Context, req *api.RepositoryID) (*api.Repository, error) {
 	repo, err := s.manager.GetRepository(ctx, req.Id)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Repository{
 		Id:       repo.ID,
@@ -50,7 +50,7 @@ func (s *Service) GetRepository(ctx context.Context, req *api.RepositoryID) (*ap
 func (s *Service) DelRepository(ctx context.Context, req *api.RepositoryID) (*api.Empty, error) {
 	err := s.manager.DelRepository(ctx, req.Id)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Empty{}, nil
 }
@@ -64,7 +64,7 @@ func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.
 		Playbook: req.Playbook,
 	})
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.RepositoryID{Id: id}, nil
 }
@@ -79,7 +79,7 @@ func (s *Service) UpdateRepository(ctx context.Context, req *api.Repository) (*a
 		Playbook: req.Playbook,
 	})
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Empty{}, nil
 }

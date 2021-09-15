@@ -11,7 +11,7 @@ import (
 func (s *Service) ListVariable(ctx context.Context, req *api.ListVariableReq) (*api.ListVariableRes, error) {
 	variables, err := s.manager.ListVariable(ctx, req.Offset, req.Limit)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	var res api.ListVariableRes
 	for _, variable := range variables {
@@ -29,7 +29,7 @@ func (s *Service) ListVariable(ctx context.Context, req *api.ListVariableReq) (*
 func (s *Service) GetVariable(ctx context.Context, req *api.VariableID) (*api.Variable, error) {
 	variable, err := s.manager.GetVariable(ctx, req.Id)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Variable{
 		Id:       variable.ID,
@@ -43,7 +43,7 @@ func (s *Service) GetVariable(ctx context.Context, req *api.VariableID) (*api.Va
 func (s *Service) DelVariable(ctx context.Context, req *api.VariableID) (*api.Empty, error) {
 	err := s.manager.DelVariable(ctx, req.Id)
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Empty{}, nil
 }
@@ -54,7 +54,7 @@ func (s *Service) PutVariable(ctx context.Context, req *api.Variable) (*api.Vari
 		Body: req.Body,
 	})
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.VariableID{Id: id}, nil
 }
@@ -65,7 +65,7 @@ func (s *Service) UpdateVariable(ctx context.Context, req *api.Variable) (*api.E
 		Body: req.Body,
 	})
 	if err != nil {
-		return nil, err
+		return nil, toRpcError(err)
 	}
 	return &api.Empty{}, nil
 }
