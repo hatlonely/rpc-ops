@@ -68,7 +68,8 @@ config:
               "delay": "1s",
               "maxDelay": "3m",
               "lastErrorOnly": true,
-              "delayType": "BackOff"
+              "delayType": "BackOff",
+              "retryIf": "mongo"
             },
             "wrapper": {
               "name": "mongo",

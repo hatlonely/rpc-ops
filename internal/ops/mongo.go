@@ -2,15 +2,40 @@ package ops
 
 import (
 	"context"
+	"fmt"
 	"time"
 
+	"github.com/hatlonely/go-kit/micro"
 	"github.com/hatlonely/go-kit/refx"
 	"github.com/hatlonely/go-kit/wrap"
 	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	mopt "go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/x/mongo/driver"
 )
+
+func init() {
+	micro.RegisterRetryRetryIf("mongo", func(err error) bool {
+		switch e := err.(type) {
+		case driver.Error:
+			if e.NetworkError() || e.NodeIsRecovering() || e.NodeIsShuttingDown() {
+				return true
+			}
+		}
+		return false
+	})
+
+	wrap.RegisterErrCode(driver.Error{}, func(err error) string {
+		return err.(driver.Error).Name
+	})
+	wrap.RegisterErrCode(mongo.WriteException{}, func(err error) string {
+		for _, me := range err.(mongo.WriteException).WriteErrors {
+			return fmt.Sprintf("E%d", me.Code)
+		}
+		return "Unknown"
+	})
+}
 
 type ManagerOptions struct {
 	Mongo                wrap.MongoClientWrapperOptions
