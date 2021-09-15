@@ -24,7 +24,13 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 	workDir := fmt.Sprintf("%s/%s/%s/%s", s.options.WorkRoot, repo.Endpoint, repo.Username, repo.Name)
 	_ = os.MkdirAll(workDir, 0755)
 
-	if _, err := os.Stat(fmt.Sprintf("%s/%s", workDir, req.Version)); os.IsNotExist(err) {
+	var directory string
+	if req.Version != "" {
+		directory = fmt.Sprintf("%s/%s", workDir, req.Version)
+	} else {
+		directory = fmt.Sprintf("%s/%s", workDir, "latest")
+	}
+	if _, err := os.Stat(directory); os.IsNotExist(err) {
 		status, stdout, stderr, err := gops.ExecCommand(command, nil, workDir)
 		if err != nil {
 			return nil, errors.Wrapf(err, "ExecCommand failed. command: [%v]", command)
@@ -35,9 +41,9 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 	}
 
 	var playbook gops.Playbook
-	cfg, err := config.NewConfigWithSimpleFile(repo.Playbook)
+	cfg, err := config.NewConfigWithSimpleFile(fmt.Sprintf("%s/%s", directory, repo.Playbook), config.WithSimpleFileType("Yaml"))
 	if err != nil {
-		return nil, errors.WithMessagef(err, "config.NewConfigWithSimpleFile failed. playbook: [%v]", repo.Playbook)
+		return nil, errors.WithMessagef(err, "config.NewConfigWithSimpleFile failed. playbook: [%s/%s]", directory, repo.Playbook)
 	}
 	if err := cfg.Unmarshal(&playbook, refx.WithCamelName()); err != nil {
 		return nil, errors.Wrap(err, "cfg.Unmarshal failed")
@@ -64,6 +70,7 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 			}}, res.Envs...)
 		}
 	}
+	res.Tasks = map[string]*api.Playbook_Task{}
 	for key, val := range playbook.Task {
 		args := map[string]*api.Playbook_Task_Args{}
 		for k, arg := range val.Args {
