@@ -45,7 +45,6 @@ func (s *Service) Ping(ctx context.Context, req *api.Empty) (*api.Empty, error) 
 }
 
 func toRpcError(err error) error {
-	fmt.Println(errors.Cause(err))
 	fmt.Println(reflect.TypeOf(errors.Cause(err)))
 	switch e := errors.Cause(err).(type) {
 	case driver.Error:

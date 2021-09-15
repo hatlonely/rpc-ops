@@ -40,6 +40,7 @@ func (s *Service) GetRepository(ctx context.Context, req *api.RepositoryID) (*ap
 		Username: repo.Username,
 		Password: repo.Password,
 		Endpoint: repo.Endpoint,
+		Team:     repo.Team,
 		Name:     repo.Name,
 		Playbook: repo.Playbook,
 		CreateAt: repo.CreateAt.Format(time.RFC3339),
@@ -60,6 +61,7 @@ func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.
 		Username: req.Username,
 		Password: req.Password,
 		Endpoint: req.Endpoint,
+		Team:     req.Team,
 		Name:     req.Name,
 		Playbook: req.Playbook,
 	})
@@ -75,6 +77,7 @@ func (s *Service) UpdateRepository(ctx context.Context, req *api.Repository) (*a
 		Username: req.Username,
 		Password: req.Password,
 		Endpoint: req.Endpoint,
+		Team:     req.Team,
 		Name:     req.Name,
 		Playbook: req.Playbook,
 	})
