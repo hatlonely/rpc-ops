@@ -88,7 +88,8 @@ config:
           "repositoryCollection": "repository",
           "timeout": "10s",
           "jobExpiration": "72h"
-        }
+        },
+        "workRoot": "data"
       },
       "logger": {
         "grpc": {

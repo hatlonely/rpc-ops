@@ -22,6 +22,7 @@ func (s *Service) DescribeRepository(ctx context.Context, req *api.DescribeRepos
 	}
 	command := s.generateGitCloneCommand(repo, req.Version)
 	workDir := fmt.Sprintf("%s/%s/%s/%s", s.options.WorkRoot, repo.Endpoint, repo.Username, repo.Name)
+	_ = os.MkdirAll(workDir, 0755)
 
 	if _, err := os.Stat(fmt.Sprintf("%s/%s", workDir, req.Version)); os.IsNotExist(err) {
 		status, stdout, stderr, err := gops.ExecCommand(command, nil, workDir)
@@ -91,8 +92,8 @@ func (s *Service) generateGitCloneCommand(repo *ops.Repository, version string) 
 		)
 	} else {
 		command = fmt.Sprintf(
-			"git clone --depth 1 --branch master https://%s:%s@%s/%s/%s.git %s",
-			repo.Username, repo.Password, repo.Endpoint, repo.Username, repo.Name, version,
+			"git clone --depth 1 --branch master https://%s:%s@%s/%s/%s.git latest",
+			repo.Username, repo.Password, repo.Endpoint, repo.Team, repo.Name,
 		)
 	}
 	return command

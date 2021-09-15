@@ -38,7 +38,6 @@ func (s *Service) GetRepository(ctx context.Context, req *api.RepositoryID) (*ap
 	return &api.Repository{
 		Id:       repo.ID,
 		Username: repo.Username,
-		Password: repo.Password,
 		Endpoint: repo.Endpoint,
 		Team:     repo.Team,
 		Name:     repo.Name,
@@ -57,6 +56,10 @@ func (s *Service) DelRepository(ctx context.Context, req *api.RepositoryID) (*ap
 }
 
 func (s *Service) PutRepository(ctx context.Context, req *api.Repository) (*api.RepositoryID, error) {
+	if req.Playbook == "" {
+		req.Playbook = ".ops.yaml"
+	}
+
 	id, err := s.manager.PutRepository(ctx, &ops.Repository{
 		Username: req.Username,
 		Password: req.Password,
