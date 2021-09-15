@@ -13,10 +13,11 @@ message Repository {
   string username = 2;
   string password = 3;
   string endpoint = 4;
-  string name = 5;
-  string playbook = 6;
-  string createAt = 7;
-  string updateAt = 8;
+  string team = 5;
+  string name = 6;
+  string playbook = 7;
+  string createAt = 8;
+  string updateAt = 9;
 }
 
 message RepositoryID {

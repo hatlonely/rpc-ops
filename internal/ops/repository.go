@@ -16,6 +16,7 @@ type Repository struct {
 	Username string    `json:"username,omitempty" bson:"username,omitempty"`
 	Password string    `json:"password,omitempty" bson:"password,omitempty"`
 	Endpoint string    `json:"endpoint,omitempty" bson:"endpoint,omitempty"`
+	Team     string    `json:"team,omitempty" bson:"team,omitempty"`
 	Name     string    `json:"name,omitempty" bson:"name,omitempty"`
 	Playbook string    `json:"opsFile,omitempty" bson:"opsFile,omitempty"`
 	CreateAt time.Time `json:"createAt,omitempty" bson:"createAt,omitempty"`

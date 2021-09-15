@@ -336,6 +336,9 @@
                 "endpoint": {
                   "type": "string"
                 },
+                "team": {
+                  "type": "string"
+                },
                 "name": {
                   "type": "string"
                 },
@@ -738,6 +741,9 @@
           "type": "string"
         },
         "endpoint": {
+          "type": "string"
+        },
+        "team": {
           "type": "string"
         },
         "name": {

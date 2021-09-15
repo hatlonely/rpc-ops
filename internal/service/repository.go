@@ -20,6 +20,7 @@ func (s *Service) ListRepository(ctx context.Context, req *api.ListRepositoryReq
 			Username: repo.Username,
 			Password: repo.Password,
 			Endpoint: repo.Endpoint,
+			Team:     repo.Team,
 			Name:     repo.Name,
 			Playbook: repo.Playbook,
 			CreateAt: repo.CreateAt.Format(time.RFC3339),
