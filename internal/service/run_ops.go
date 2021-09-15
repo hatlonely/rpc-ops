@@ -14,6 +14,9 @@ func (s *Service) RunOps(ctx context.Context, req *api.RunOpsReq) (*api.RunOpsRe
 		RepositoryID: req.RepositoryID,
 		VariableID:   req.VariableID,
 		Version:      req.Version,
+		Environment:  req.Environment,
+		Task:         req.Task,
+		Args:         req.Args,
 		State:        ops.JobStateWaiting,
 	})
 	if err != nil {

@@ -26,6 +26,9 @@ type Job struct {
 	VariableID    string    `json:"variableID,omitempty" bson:"variableID,omitempty"`
 	WorkDirectory string    `json:"workDirectory,omitempty" bson:"workDirectory,omitempty"`
 	Command       string    `json:"command,omitempty" bson:"command,omitempty"`
+	Environment   string    `json:"environment,omitempty" bson:"environment,omitempty"`
+	Task          string    `json:"task,omitempty" bson:"task,omitempty"`
+	Args          string    `json:"args,omitempty" bson:"args,omitempty"`
 	Version       string    `json:"version,omitempty" bson:"version,omitempty"`
 	CreateAt      time.Time `json:"createAt,omitempty" bson:"createAt,omitempty"`
 	UpdateAt      time.Time `json:"updateAt,omitempty" bson:"updateAt,omitempty"`
