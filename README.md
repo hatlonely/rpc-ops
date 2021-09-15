@@ -8,7 +8,7 @@ ops --variable .cfg/dev.yaml -a run --env dev --task helm
 ops --variable .cfg/dev.yaml -a run --env dev --task helm --cmd=install
 ops --variable .cfg/dev.yaml -a run --env dev --task helm --cmd=upgrade
 
-curl -X POST 127.0.0.1/v1/repository -H "Origin:hello" \
+curl -X POST -H "Origin:hello" 127.0.0.1/v1/repository \
   -d '{
   "username": "hatlonely@gmail.com",
   "password": "xx",
@@ -18,5 +18,5 @@ curl -X POST 127.0.0.1/v1/repository -H "Origin:hello" \
 }'
 
 
-curl 127.0.0.1/v1/repository
+curl -H "Origin:hello" 127.0.0.1/v1/repository/c979ffaa2b964a0abd6deb3f918ab7fd
 ```

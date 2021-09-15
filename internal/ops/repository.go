@@ -29,6 +29,7 @@ func (s *Manager) GetRepository(ctx context.Context, id string) (*Repository, er
 	if err := collection.FindOne(ctx, bson.M{"_id": id}).Decode(&repository); err != nil {
 		return nil, errors.Wrapf(err, "mongo.Collection.FindOne failed. id: [%v]", id)
 	}
+	repository.Password = ""
 	return &repository, nil
 }
 
