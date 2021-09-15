@@ -39,7 +39,7 @@ func NewManagerWithOptions(options *ManagerOptions, opts ...refx.Option) (*Manag
 		ctx, cancel := context.WithTimeout(context.Background(), options.Timeout)
 		defer cancel()
 		if _, err := collection.Indexes().CreateMany(ctx, []mongo.IndexModel{
-			{Keys: bson.M{"endpoint": 1, "name": 1}, Options: mopt.Index().SetUnique(true)},
+			{Keys: bson.M{"endpoint": 1, "team": 1, "name": 1}, Options: mopt.Index().SetUnique(true)},
 		}); err != nil {
 			return nil, errors.Wrap(err, "mongo.Indexes.CreateMany failed")
 		}
