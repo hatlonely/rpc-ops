@@ -10,13 +10,20 @@ import (
 )
 
 type Options struct {
-	CustomerNum int
-	ProducerNum int
+	TaskLen int `dft:"100"`
+	ErrLen  int `dft:"100"`
+}
+
+func NewActuatorWithOptions(infoLogger, execLogger *logger.Logger, options *Options) *Actuator {
+	return &Actuator{
+		taskQueue:  make(chan interface{}, options.TaskLen),
+		errQueue:   make(chan error, options.ErrLen),
+		execLogger: execLogger,
+		infoLogger: infoLogger,
+	}
 }
 
 type Actuator struct {
-	options *Options
-
 	taskQueue chan interface{}
 	errQueue  chan error
 	producers []Producer
@@ -92,9 +99,9 @@ func (a *Actuator) Run() {
 				err := consumer.Consume(task)
 				if err != nil {
 					a.errQueue <- err
-					a.execLogger.With("req", task).With("err", err.Error()).With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
+					a.execLogger.With("task", task).With("err", err.Error()).With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
 				} else {
-					a.execLogger.With("req", task).With("errCode", "OK").With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
+					a.execLogger.With("task", task).With("errCode", "OK").With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
 				}
 			}
 			a.wgc.Done()
