@@ -1,4 +1,4 @@
-package actuator
+package executor
 
 type Producer interface {
 	Produce() (interface{}, error)

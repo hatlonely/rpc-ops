@@ -1,4 +1,4 @@
-package actuator
+package executor
 
 type Consumer interface {
 	Consume(interface{}) error

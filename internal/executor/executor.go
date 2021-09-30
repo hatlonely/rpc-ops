@@ -1,4 +1,4 @@
-package actuator
+package executor
 
 import (
 	"context"
@@ -14,8 +14,8 @@ type Options struct {
 	ErrLen  int `dft:"100"`
 }
 
-func NewActuatorWithOptions(infoLogger, execLogger *logger.Logger, options *Options) *Actuator {
-	return &Actuator{
+func NewExecutorWithOptions(infoLogger, execLogger *logger.Logger, options *Options) *Executor {
+	return &Executor{
 		taskQueue:  make(chan interface{}, options.TaskLen),
 		errQueue:   make(chan error, options.ErrLen),
 		execLogger: execLogger,
@@ -23,7 +23,7 @@ func NewActuatorWithOptions(infoLogger, execLogger *logger.Logger, options *Opti
 	}
 }
 
-type Actuator struct {
+type Executor struct {
 	taskQueue chan interface{}
 	errQueue  chan error
 	producers []Producer
@@ -39,27 +39,27 @@ type Actuator struct {
 	infoLogger *logger.Logger
 }
 
-func (a *Actuator) SetProducerFunc(producerNum int, producer func() (interface{}, error)) {
+func (a *Executor) SetProducerFunc(producerNum int, producer func() (interface{}, error)) {
 	for i := 0; i < producerNum; i++ {
 		a.producers = append(a.producers, ProducerFunc(producer))
 	}
 }
 
-func (a *Actuator) SetConsumerFunc(consumerNum int, consumer func(interface{}) error) {
+func (a *Executor) SetConsumerFunc(consumerNum int, consumer func(interface{}) error) {
 	for i := 0; i < consumerNum; i++ {
 		a.consumers = append(a.consumers, ConsumerFunc(consumer))
 	}
 }
 
-func (a *Actuator) AddProducer(producer Producer) {
+func (a *Executor) AddProducer(producer Producer) {
 	a.producers = append(a.producers, producer)
 }
 
-func (a *Actuator) AddCustomer(consumer Consumer) {
+func (a *Executor) AddCustomer(consumer Consumer) {
 	a.consumers = append(a.consumers, consumer)
 }
 
-func (a *Actuator) Run() {
+func (a *Executor) Run() {
 	a.ctx, a.cancel = context.WithCancel(context.Background())
 
 	for _, producer := range a.producers {
@@ -117,7 +117,7 @@ func (a *Actuator) Run() {
 	}()
 }
 
-func (a *Actuator) Stop() {
+func (a *Executor) Stop() {
 	a.cancel()
 	a.wgp.Wait()
 	close(a.taskQueue)
