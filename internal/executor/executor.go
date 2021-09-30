@@ -39,31 +39,31 @@ type Executor struct {
 	infoLogger *logger.Logger
 }
 
-func (a *Executor) SetProducerFunc(producerNum int, producer func() (interface{}, error)) {
+func (e *Executor) SetProducerFunc(producerNum int, producer func() (interface{}, error)) {
 	for i := 0; i < producerNum; i++ {
-		a.producers = append(a.producers, ProducerFunc(producer))
+		e.producers = append(e.producers, ProducerFunc(producer))
 	}
 }
 
-func (a *Executor) SetConsumerFunc(consumerNum int, consumer func(interface{}) error) {
+func (e *Executor) SetConsumerFunc(consumerNum int, consumer func(interface{}) error) {
 	for i := 0; i < consumerNum; i++ {
-		a.consumers = append(a.consumers, ConsumerFunc(consumer))
+		e.consumers = append(e.consumers, ConsumerFunc(consumer))
 	}
 }
 
-func (a *Executor) AddProducer(producer Producer) {
-	a.producers = append(a.producers, producer)
+func (e *Executor) AddProducer(producer Producer) {
+	e.producers = append(e.producers, producer)
 }
 
-func (a *Executor) AddCustomer(consumer Consumer) {
-	a.consumers = append(a.consumers, consumer)
+func (e *Executor) AddCustomer(consumer Consumer) {
+	e.consumers = append(e.consumers, consumer)
 }
 
-func (a *Executor) Run() {
-	a.ctx, a.cancel = context.WithCancel(context.Background())
+func (e *Executor) Run() {
+	e.ctx, e.cancel = context.WithCancel(context.Background())
 
-	for _, producer := range a.producers {
-		a.wgp.Add(1)
+	for _, producer := range e.producers {
+		e.wgp.Add(1)
 		go func(ctx context.Context, producer Producer) {
 		out:
 			for {
@@ -82,46 +82,46 @@ func (a *Executor) Run() {
 				case <-ctx.Done():
 					break out
 				case err := <-che:
-					a.errQueue <- err
+					e.errQueue <- err
 				case product := <-chp:
-					a.taskQueue <- product
+					e.taskQueue <- product
 				}
 			}
-			a.wgp.Done()
-		}(a.ctx, producer)
+			e.wgp.Done()
+		}(e.ctx, producer)
 	}
 
-	for _, consumer := range a.consumers {
-		a.wgc.Add(1)
+	for _, consumer := range e.consumers {
+		e.wgc.Add(1)
 		go func(ctx context.Context, consumer Consumer) {
-			for task := range a.taskQueue {
+			for task := range e.taskQueue {
 				now := time.Now()
 				err := consumer.Consume(task)
 				if err != nil {
-					a.errQueue <- err
-					a.execLogger.With("task", task).With("err", err.Error()).With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
+					e.errQueue <- err
+					e.execLogger.With("task", task).With("err", err.Error()).With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
 				} else {
-					a.execLogger.With("task", task).With("errCode", "OK").With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
+					e.execLogger.With("task", task).With("errCode", "OK").With("resTimeMs", time.Now().Sub(now).Milliseconds()).Info("")
 				}
 			}
-			a.wgc.Done()
-		}(a.ctx, consumer)
+			e.wgc.Done()
+		}(e.ctx, consumer)
 	}
 
-	a.wge.Add(1)
+	e.wge.Add(1)
 	go func() {
-		for err := range a.errQueue {
-			a.infoLogger.With("err", err.Error()).With("errStack", fmt.Sprintf("%+v", err))
+		for err := range e.errQueue {
+			e.infoLogger.With("err", err.Error()).With("errStack", fmt.Sprintf("%+v", err))
 		}
-		a.wge.Done()
+		e.wge.Done()
 	}()
 }
 
-func (a *Executor) Stop() {
-	a.cancel()
-	a.wgp.Wait()
-	close(a.taskQueue)
-	a.wgc.Wait()
-	close(a.errQueue)
-	a.wge.Wait()
+func (e *Executor) Stop() {
+	e.cancel()
+	e.wgp.Wait()
+	close(e.taskQueue)
+	e.wgc.Wait()
+	close(e.errQueue)
+	e.wge.Wait()
 }
