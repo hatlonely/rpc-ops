@@ -14,7 +14,7 @@ type Options struct {
 	ErrLen  int `dft:"100"`
 }
 
-func NewExecutorWithOptions(infoLogger, execLogger *logger.Logger, options *Options) *Executor {
+func NewExecutorWithOptions(options *Options, infoLogger, execLogger *logger.Logger) *Executor {
 	return &Executor{
 		taskQueue:  make(chan interface{}, options.TaskLen),
 		errQueue:   make(chan error, options.ErrLen),
